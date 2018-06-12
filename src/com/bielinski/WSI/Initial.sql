@@ -1,9 +1,7 @@
 
-/*
-Ta wersja pozwala na pokazanie rónicy pomiędzy pracownikami zarabiającymi najmniej w swoich departamentach i tymi,
-którzy zarabiaja tyle, ile wynoszą najniższe płace w departamentach. Można też pokazać LEFT, RIGHT i FULL JOIN na
-pracownikach i departamentach
-*/
+#Ta wersja pozwala na pokazanie rónicy pomiędzy pracownikami zarabiającymi najmniej w swoich departamentach i tymi,
+#którzy zarabiaja tyle, ile wynoszą najniższe płace w departamentach. Można też pokazać LEFT, RIGHT i FULL JOIN na
+#pracownikach i departamentach
 
 set termout on
 prompt Building demonstration tables.  Please wait.
