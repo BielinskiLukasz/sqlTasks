@@ -1,11 +1,12 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2018-10-22 18:14:42.048
+-- Last modification date: 2018-10-22 19:24:51.217
 
 -- tables
 -- Table: Klient
 CREATE TABLE Klient (
     Osoba_id integer  NOT NULL,
     Status_library_id integer  NOT NULL,
+    Przedstawiciel_Osoba_id integer  NOT NULL,
     CONSTRAINT Klient_pk PRIMARY KEY (Osoba_id)
 ) ;
 
@@ -67,6 +68,11 @@ CREATE TABLE Typ_kontaktu_library (
 ALTER TABLE Klient ADD CONSTRAINT Klient_Osoba
     FOREIGN KEY (Osoba_id)
     REFERENCES Osoba (id);
+
+-- Reference: Klient_Przedstawiciel (table: Klient)
+ALTER TABLE Klient ADD CONSTRAINT Klient_Przedstawiciel
+    FOREIGN KEY (Przedstawiciel_Osoba_id)
+    REFERENCES Przedstawiciel (Osoba_id);
 
 -- Reference: Klient_Status_library (table: Klient)
 ALTER TABLE Klient ADD CONSTRAINT Klient_Status_library

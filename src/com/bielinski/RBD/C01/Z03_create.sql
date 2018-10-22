@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2018-10-22 18:13:36.884
+-- Last modification date: 2018-10-22 19:25:23.129
 
 -- tables
 -- Table: Klient_firma
