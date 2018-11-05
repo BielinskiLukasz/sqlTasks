@@ -1,17 +1,18 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2018-10-22 19:25:23.129
+-- Last modification date: 2018-11-05 19:09:41.046
 
 -- tables
 -- Table: Klient_firma
 CREATE TABLE Klient_firma (
     id integer  NOT NULL,
+    nazwa varchar2(100)  NOT NULL,
     CONSTRAINT Klient_firma_pk PRIMARY KEY (id)
 ) ;
 
 -- Table: Konferencja
 CREATE TABLE Konferencja (
     id integer  NOT NULL,
-    temat char(250)  NOT NULL,
+    temat varchar2(250)  NOT NULL,
     data date  NULL,
     Klient_firma_id integer  NOT NULL,
     CONSTRAINT Konferencja_pk PRIMARY KEY (id)
@@ -20,7 +21,7 @@ CREATE TABLE Konferencja (
 -- Table: Odczyt
 CREATE TABLE Odczyt (
     id integer  NOT NULL,
-    temat char(250)  NOT NULL,
+    temat varchar2(250)  NOT NULL,
     Pracownik_osoba_id integer  NOT NULL,
     Konferencja_id integer  NOT NULL,
     CONSTRAINT Odczyt_pk PRIMARY KEY (id)
@@ -36,6 +37,8 @@ CREATE TABLE Pracownik (
 -- Table: osoba
 CREATE TABLE osoba (
     id integer  NOT NULL,
+    imie varchar2(50)  NOT NULL,
+    nazwisko varchar2(200)  NOT NULL,
     CONSTRAINT osoba_pk PRIMARY KEY (id)
 ) ;
 

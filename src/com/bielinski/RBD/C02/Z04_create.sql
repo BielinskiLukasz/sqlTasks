@@ -1,22 +1,22 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2018-10-22 20:48:41.361
+-- Last modification date: 2018-11-05 19:20:55.089
 
 -- tables
 -- Table: Adres
 CREATE TABLE Adres (
     id integer  NOT NULL,
-    ulica char(50)  NOT NULL,
+    ulica varchar2(50)  NOT NULL,
     nr_domu integer  NOT NULL,
     nr_mieszkania integer  NOT NULL,
-    kod_pocztowy char(10)  NOT NULL,
-    miejscowosc char(100)  NOT NULL,
+    kod_pocztowy varchar2(10)  NOT NULL,
+    miejscowosc varchar2(100)  NOT NULL,
     CONSTRAINT Adres_pk PRIMARY KEY (id)
 ) ;
 
 -- Table: Autokar
 CREATE TABLE Autokar (
     id integer  NOT NULL,
-    standard char(50)  NOT NULL,
+    standard varchar2(50)  NOT NULL,
     ilosc_miejsc integer  NOT NULL,
     CONSTRAINT Autokar_pk PRIMARY KEY (id)
 ) ;
@@ -51,9 +51,9 @@ CREATE TABLE Klient_indywidualny (
 -- Table: Osoba
 CREATE TABLE Osoba (
     id integer  NOT NULL,
-    imie char(50)  NOT NULL,
-    nazwisko char(200)  NOT NULL,
-    telefon char(20)  NOT NULL,
+    imie varchar2(50)  NOT NULL,
+    nazwisko varchar2(200)  NOT NULL,
+    telefon varchar2(20)  NOT NULL,
     Adres_id integer  NOT NULL,
     CONSTRAINT Osoba_pk PRIMARY KEY (id)
 ) ;
@@ -88,7 +88,7 @@ CREATE TABLE Rezerwacja_Kierowca (
 -- Table: Wyposazenie
 CREATE TABLE Wyposazenie (
     id integer  NOT NULL,
-    nazwa char(50)  NOT NULL,
+    nazwa varchar2(50)  NOT NULL,
     CONSTRAINT Wyposazenie_pk PRIMARY KEY (id)
 ) ;
 

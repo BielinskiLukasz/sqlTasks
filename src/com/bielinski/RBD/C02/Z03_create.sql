@@ -1,22 +1,22 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2018-10-22 20:22:14.158
+-- Last modification date: 2018-11-05 19:19:30.33
 
 -- tables
 -- Table: Agent
 CREATE TABLE Agent (
     id integer  NOT NULL,
-    imie char(50)  NOT NULL,
-    nazwisko char(100)  NOT NULL,
-    stopien char(50)  NOT NULL,
+    imie varchar2(50)  NOT NULL,
+    nazwisko varchar2(100)  NOT NULL,
+    stopien varchar2(50)  NOT NULL,
     CONSTRAINT Agent_pk PRIMARY KEY (id)
 ) ;
 
 -- Table: Akcja
 CREATE TABLE Akcja (
     id integer  NOT NULL,
-    kryptonim char(50)  NOT NULL,
-    cel char(50)  NOT NULL,
-    teren char(50)  NOT NULL,
+    kryptonim varchar2(50)  NOT NULL,
+    cel varchar2(50)  NOT NULL,
+    teren varchar2(50)  NOT NULL,
     data_start date  NOT NULL,
     data_stop date  NOT NULL,
     CONSTRAINT Akcja_pk PRIMARY KEY (id)
@@ -27,7 +27,7 @@ CREATE TABLE Akcja_Agent (
     id integer  NOT NULL,
     Akcja_id integer  NOT NULL,
     Agent_id integer  NOT NULL,
-    pseudonim char(50)  NOT NULL,
+    pseudonim varchar2(50)  NOT NULL,
     CONSTRAINT Akcja_Agent_pk PRIMARY KEY (id)
 ) ;
 

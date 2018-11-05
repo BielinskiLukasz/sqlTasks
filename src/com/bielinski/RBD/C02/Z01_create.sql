@@ -1,11 +1,11 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2018-10-22 19:26:15.106
+-- Last modification date: 2018-11-05 19:15:01.202
 
 -- tables
 -- Table: Piwo
 CREATE TABLE Piwo (
     id integer  NOT NULL,
-    nazwa char(100)  NOT NULL,
+    nazwa varchar2(100)  NOT NULL,
     CONSTRAINT Piwo_pk PRIMARY KEY (id)
 ) ;
 
@@ -36,12 +36,12 @@ CREATE TABLE Piwosz (
 -- Table: Pub
 CREATE TABLE Pub (
     id integer  NOT NULL,
-    nazwa char(100)  NOT NULL,
-    ulica char(100)  NOT NULL,
+    nazwa varchar2(100)  NOT NULL,
+    ulica varchar2(100)  NOT NULL,
     nr_budynku integer  NOT NULL,
     nr_lokalu integer  NULL,
-    kod_pocztowy char(6)  NOT NULL,
-    miasto char(100)  NOT NULL,
+    kod_pocztowy varchar2(6)  NOT NULL,
+    miasto varchar2(100)  NOT NULL,
     CONSTRAINT Pub_pk PRIMARY KEY (id)
 ) ;
 

@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2018-10-22 19:24:51.217
+-- Last modification date: 2018-11-05 19:10:46.262
 
 -- tables
 -- Table: Klient
@@ -14,8 +14,8 @@ CREATE TABLE Klient (
 CREATE TABLE Kontakt (
     id integer  NOT NULL,
     data date  NOT NULL,
-    opis char(1000)  NOT NULL,
-    typ char(50)  NOT NULL,
+    opis varchar2(1000)  NOT NULL,
+    typ varchar2(50)  NOT NULL,
     Typ_kontaktu_library_id integer  NOT NULL,
     Klient_Osoba_id integer  NOT NULL,
     Przedstawiciel_Osoba_id integer  NOT NULL,
@@ -25,20 +25,20 @@ CREATE TABLE Kontakt (
 -- Table: Oddzial
 CREATE TABLE Oddzial (
     id integer  NOT NULL,
-    nazwa char(50)  NOT NULL,
+    nazwa varchar2(50)  NOT NULL,
     CONSTRAINT Oddzial_pk PRIMARY KEY (id)
 ) ;
 
 -- Table: Osoba
 CREATE TABLE Osoba (
     id integer  NOT NULL,
-    imie char(50)  NOT NULL,
-    nazwisko char(100)  NOT NULL,
-    ulica char(250)  NOT NULL,
+    imie varchar2(50)  NOT NULL,
+    nazwisko varchar2(100)  NOT NULL,
+    ulica varchar2(250)  NOT NULL,
     nr_domu integer  NOT NULL,
     nr_mieszkania integer  NULL,
-    kod_pocztowy char(5)  NOT NULL,
-    miejscowosc char(200)  NOT NULL,
+    kod_pocztowy varchar2(5)  NOT NULL,
+    miejscowosc varchar2(200)  NOT NULL,
     CONSTRAINT Osoba_pk PRIMARY KEY (id)
 ) ;
 
@@ -52,14 +52,14 @@ CREATE TABLE Przedstawiciel (
 -- Table: Status_library
 CREATE TABLE Status_library (
     id integer  NOT NULL,
-    typ char(50)  NOT NULL,
+    typ varchar2(50)  NOT NULL,
     CONSTRAINT Status_library_pk PRIMARY KEY (id)
 ) ;
 
 -- Table: Typ_kontaktu_library
 CREATE TABLE Typ_kontaktu_library (
     id integer  NOT NULL,
-    typ char(100)  NOT NULL,
+    typ varchar2(100)  NOT NULL,
     CONSTRAINT Typ_kontaktu_library_pk PRIMARY KEY (id)
 ) ;
 

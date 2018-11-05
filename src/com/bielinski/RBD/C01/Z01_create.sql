@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2018-10-21 20:28:29.593
+-- Last modification date: 2018-11-05 18:47:44.799
 
 -- tables
 -- Table: Klucz
@@ -12,15 +12,15 @@ CREATE TABLE Klucz (
 -- Table: Prowadzacy
 CREATE TABLE Prowadzacy (
     id integer  NOT NULL,
-    imie char(50)  NOT NULL,
-    nazwisko char(100)  NOT NULL,
+    imie varchar2(50)  NOT NULL,
+    nazwisko varchar2(100)  NOT NULL,
     CONSTRAINT Prowadzacy_pk PRIMARY KEY (id)
 ) ;
 
 -- Table: Sala
 CREATE TABLE Sala (
     id integer  NOT NULL,
-    symbol char(10)  NOT NULL,
+    symbol varchar2(10)  NOT NULL,
     CONSTRAINT Sala_pk PRIMARY KEY (id)
 ) ;
 
