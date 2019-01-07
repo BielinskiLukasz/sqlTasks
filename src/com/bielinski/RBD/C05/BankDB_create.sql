@@ -1,513 +1,399 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2018-12-02 14:54:01.452
+-- Last modification date: 2019-01-07 20:28:28.533
 
 -- tables
 -- Table: Adres
-CREATE TABLE Adres
-(
-  id            integer NOT NULL,
-  typ_adresu    varchar2(2) NOT NULL,
-  kraj          varchar2(50) NOT NULL,
-  wojewodztwo   varchar2(50) NOT NULL,
-  miasto        varchar2(50) NOT NULL,
-  kod_pocztowy  varchar2(10) NOT NULL,
-  ulica         varchar2(100) NOT NULL,
-  nr_domu       varchar2(10) NOT NULL,
-  nr_mieszkania varchar2(10) NULL,
-  CONSTRAINT Adres_pk PRIMARY KEY (id)
-);
+CREATE TABLE Adres (
+    IdAdres integer  NOT NULL,
+    Kraj varchar2(50)  NOT NULL,
+    Wojewodztwo varchar2(50)  NOT NULL,
+    Miasto varchar2(50)  NOT NULL,
+    KodPocztowy varchar2(10)  NOT NULL,
+    Ulica varchar2(100)  NOT NULL,
+    NrDomu varchar2(10)  NOT NULL,
+    NrMieszkania varchar2(10)  NULL,
+    AdresDictKey varchar2(2)  NOT NULL,
+    CONSTRAINT Adres_pk PRIMARY KEY (IdAdres)
+) ;
 
--- Table: Adres_dict
-CREATE TABLE Adres_dict
-(
-  key   varchar2(2) NOT NULL,
-  value varchar2(50) NOT NULL,
-  CONSTRAINT Adres_dict_pk PRIMARY KEY (key)
-);
+-- Table: AdresDict
+CREATE TABLE AdresDict (
+    Key varchar2(2)  NOT NULL,
+    Value varchar2(50)  NOT NULL,
+    CONSTRAINT AdresDict_pk PRIMARY KEY (Key)
+) ;
 
--- Table: Bank_dict
-CREATE TABLE Bank_dict
-(
-  key                  varchar2(2) NOT NULL,
-  value                varchar2(50) NOT NULL,
-  adres_siedziby_banku integer NOT NULL,
-  CONSTRAINT Bank_dict_pk PRIMARY KEY (key)
-);
-
--- Table: Dane_osobowe
-CREATE TABLE Dane_osobowe
-(
-  id                    integer NOT NULL,
-  imie                  varchar2(50) NOT NULL,
-  drugie_imie           varchar2(50) NULL,
-  nazwisko              varchar2(100) NOT NULL,
-  nr_pesel              integer NULL,
-  Adres_id              integer NOT NULL,
-  imie_ojca             varchar2(50) NOT NULL,
-  imie_matki            varchar2(50) NOT NULL,
-  nazwisko_rodowe_matki varchar2(50) NOT NULL,
-  data_urodzenia        date    NOT NULL,
-  Obywatelstwo_key      varchar2(2) NOT NULL,
-  Urzad_skarbowy_id     integer NOT NULL,
-  Identyfikator_id      integer NOT NULL,
-  Stan_cywilny_key      varchar2(2) NOT NULL,
-  miejsce_urodzenia     varchar2(100) NOT NULL,
-  CONSTRAINT Dane_osobowe_pk PRIMARY KEY (id)
-);
-
--- Table: Dane_osobowe_email
-CREATE TABLE Dane_osobowe_email
-(
-  id         integer NOT NULL,
-  Email_id   integer NOT NULL,
-  Osoba_id   integer NOT NULL,
-  czy_glowny varchar2(1) NOT NULL,
-  CONSTRAINT Dane_osobowe_email_pk PRIMARY KEY (id)
-);
-
--- Table: Dane_osobowe_telefon
-CREATE TABLE Dane_osobowe_telefon
-(
-  id         integer NOT NULL,
-  Osoba_id   integer NOT NULL,
-  Telefon_id integer NOT NULL,
-  czy_glowny varchar2(1) NOT NULL,
-  CONSTRAINT Dane_osobowe_telefon_pk PRIMARY KEY (id)
-);
+-- Table: BankDict
+CREATE TABLE BankDict (
+    Key varchar2(2)  NOT NULL,
+    Value varchar2(50)  NOT NULL,
+    IdAdres integer  NOT NULL,
+    CONSTRAINT BankDict_pk PRIMARY KEY (Key)
+) ;
 
 -- Table: Email
-CREATE TABLE Email
-(
-  id    integer NOT NULL,
-  adres varchar2(50) NOT NULL,
-  CONSTRAINT Email_pk PRIMARY KEY (id)
-);
+CREATE TABLE Email (
+    IdEmail integer  NOT NULL,
+    Adres varchar2(50)  NOT NULL,
+    CzyGlowny varchar2(1)  NOT NULL,
+    Klient_IdKlient integer  NOT NULL,
+    CONSTRAINT Email_pk PRIMARY KEY (IdEmail)
+) ;
 
 -- Table: Identyfikator
-CREATE TABLE Identyfikator
-(
-  id                integer NOT NULL,
-  Identygikator_key varchar2(2) NOT NULL,
-  nr                varchar2(50) NOT NULL,
-  CONSTRAINT Identyfikator_pk PRIMARY KEY (id)
-);
+CREATE TABLE Identyfikator (
+    IdIdentyfikator integer  NOT NULL,
+    Nr varchar2(50)  NOT NULL,
+    IdentyfikatorDictKey varchar2(2)  NOT NULL,
+    CONSTRAINT Identyfikator_pk PRIMARY KEY (IdIdentyfikator)
+) ;
 
--- Table: Identyfikator_konta
-CREATE TABLE Identyfikator_konta
-(
-  id       integer NOT NULL,
-  nr_konta integer NOT NULL,
-  Bank_key varchar2(2) NULL,
-  Adres_id integer NULL,
-  CONSTRAINT Identyfikator_konta_pk PRIMARY KEY (id)
-);
+-- Table: IdentyfikatorDict
+CREATE TABLE IdentyfikatorDict (
+    Key varchar2(2)  NOT NULL,
+    Value varchar2(50)  NOT NULL,
+    CONSTRAINT IdentyfikatorDict_pk PRIMARY KEY (Key)
+) ;
 
--- Table: Identygikator_dict
-CREATE TABLE Identygikator_dict
-(
-  key   varchar2(2) NOT NULL,
-  value varchar2(50) NOT NULL,
-  CONSTRAINT Identygikator_dict_pk PRIMARY KEY (key)
-);
+-- Table: IdentyfikatorKonta
+CREATE TABLE IdentyfikatorKonta (
+    IdIdentyfikatorKonta integer  NOT NULL,
+    NrKonta integer  NOT NULL,
+    BankDictKey varchar2(2)  NOT NULL,
+    IdAdres integer  NULL,
+    CONSTRAINT IdentyfikatorKonta_pk PRIMARY KEY (IdIdentyfikatorKonta)
+) ;
 
 -- Table: Karta
-CREATE TABLE Karta
-(
-  id                        integer   NOT NULL,
-  nr_karty                  integer   NOT NULL,
-  typ_karty_key             varchar2(2) NOT NULL,
-  wlasciciel_karty_id       integer   NOT NULL,
-  podpiety_rachunek_id      integer   NOT NULL,
-  dzienny_limit_kwoty       float(10) NULL,
-  limit_debetu              float(10) NOT NULL,
-  czy_platnosci_mobilne     varchar2(1) NOT NULL,
-  czy_platnosci_zblizeniowe varchar2(1) NOT NULL,
-  data_waznosci             date      NOT NULL,
-  CONSTRAINT Karta_pk PRIMARY KEY (id)
-);
+CREATE TABLE Karta (
+    IdKarta integer  NOT NULL,
+    NrKarty integer  NOT NULL,
+    DziennyLimitTransakcji float(10)  NULL,
+    LimitDebetu float(10)  NOT NULL,
+    CzyPlatnosciMobilne varchar2(1)  NOT NULL,
+    CzyPlatnosciZblizeniowe varchar2(1)  NOT NULL,
+    DataWaznosci date  NOT NULL,
+    CzyDezaktywowana varchar2(1)  NOT NULL,
+    KartaDictKey varchar2(2)  NOT NULL,
+    IdKlient integer  NOT NULL,
+    IdRachunek integer  NOT NULL,
+    CONSTRAINT Karta_pk PRIMARY KEY (IdKarta)
+) ;
 
--- Table: Karta_dict
-CREATE TABLE Karta_dict
-(
-  key   varchar2(2) NOT NULL,
-  value varchar2(50) NOT NULL,
-  CONSTRAINT Karta_dict_pk PRIMARY KEY (key)
-);
+-- Table: KartaDict
+CREATE TABLE KartaDict (
+    Key varchar2(2)  NOT NULL,
+    Value varchar2(50)  NOT NULL,
+    CONSTRAINT KartaDict_pk PRIMARY KEY (Key)
+) ;
 
--- Table: Kategoria_dict
-CREATE TABLE Kategoria_dict
-(
-  key   varchar2(2) NOT NULL,
-  value varchar2(50) NOT NULL,
-  CONSTRAINT Kategoria_dict_pk PRIMARY KEY (key)
-);
+-- Table: KategoriaDict
+CREATE TABLE KategoriaDict (
+    Key varchar2(2)  NOT NULL,
+    Value varchar2(50)  NOT NULL,
+    CONSTRAINT KategoriaDict_pk PRIMARY KEY (Key)
+) ;
 
 -- Table: Klient
-CREATE TABLE Klient
-(
-  id                    integer NOT NULL,
-  Dane_osobowe_id       integer NOT NULL,
-  data_odejscia_klienta date NULL,
-  Logowanie_id          integer NOT NULL,
-  rodo_Flag             varchar2(1) NOT NULL,
-  Zgoda_marketingowe_id integer NOT NULL,
-  CONSTRAINT Klient_pk PRIMARY KEY (id)
-);
+CREATE TABLE Klient (
+    IdKlient integer  NOT NULL,
+    Imie varchar2(50)  NOT NULL,
+    DrugieImie varchar2(50)  NULL,
+    Nazwisko varchar2(100)  NOT NULL,
+    NrPesel integer  NULL,
+    ImieOjca varchar2(50)  NOT NULL,
+    ImieMatki varchar2(50)  NOT NULL,
+    NazwiskoRodoweMatki varchar2(50)  NOT NULL,
+    DataUrodzenia date  NOT NULL,
+    MiejsceUrodzenia varchar2(100)  NOT NULL,
+    DataOdejsciaKlienta date  NULL,
+    RodoFlag varchar2(1)  NOT NULL,
+    ObywatelstwoDictKey varchar2(2)  NOT NULL,
+    StanCywilnyDictKey varchar2(2)  NOT NULL,
+    IdIdentyfikator integer  NOT NULL,
+    IdUrzadSkarbowy integer  NOT NULL,
+    IdAdres integer  NOT NULL,
+    CONSTRAINT Klient_pk PRIMARY KEY (IdKlient)
+) ;
 
 -- Table: Klient_Lokata
-CREATE TABLE Klient_Lokata
-(
-  id             integer   NOT NULL,
-  Klient_id      integer   NOT NULL,
-  Lokata_id      integer   NOT NULL,
-  kwota          float(30) NOT NULL,
-  okres          integer   NOT NULL,
-  data_zalozenia date      NOT NULL,
-  CONSTRAINT Klient_Lokata_pk PRIMARY KEY (id)
-);
+CREATE TABLE Klient_Lokata (
+    IdKlient_Lokata integer  NOT NULL,
+    Kwota float(30)  NOT NULL,
+    Okres integer  NOT NULL,
+    DataZalozenia date  NOT NULL,
+    IdKlient integer  NOT NULL,
+    IdLokata integer  NOT NULL,
+    CONSTRAINT Klient_Lokata_pk PRIMARY KEY (IdKlient_Lokata)
+) ;
 
 -- Table: Klient_Rachunek
-CREATE TABLE Klient_Rachunek
-(
-  id          integer NOT NULL,
-  Klient_id   integer NOT NULL,
-  Rachunek_id integer NOT NULL,
-  CONSTRAINT Klient_Rachunek_pk PRIMARY KEY (id)
-);
-
--- Table: Logowanie
-CREATE TABLE Logowanie
-(
-  id    integer NOT NULL,
-  login integer NOT NULL,
-  haslo varchar2(50) NOT NULL,
-  CONSTRAINT Logowanie_pk PRIMARY KEY (id)
-);
+CREATE TABLE Klient_Rachunek (
+    IdKlient_Rachunek integer  NOT NULL,
+    IdKlient integer  NOT NULL,
+    IdRachunek integer  NOT NULL,
+    CONSTRAINT Klient_Rachunek_pk PRIMARY KEY (IdKlient_Rachunek)
+) ;
 
 -- Table: Lokata
-CREATE TABLE Lokata
-(
-  id                   integer   NOT NULL,
-  oprocentowanie       float(10) NOT NULL,
-  kwota_min            float(10) NOT NULL,
-  kwota_max            float(10) NOT NULL,
-  okres_min            integer   NOT NULL,
-  okres_max            integer   NOT NULL,
-  poczatek_dostepnosci date      NOT NULL,
-  koniec_dostepnosci   date      NOT NULL,
-  CONSTRAINT Lokata_pk PRIMARY KEY (id)
-);
+CREATE TABLE Lokata (
+    IdLokata integer  NOT NULL,
+    Oprocentowanie float(10)  NOT NULL,
+    KwotaMin float(10)  NOT NULL,
+    KwotaMax float(10)  NOT NULL,
+    OkresMin integer  NOT NULL,
+    OkresMax integer  NOT NULL,
+    PoczatekDostepnosci date  NOT NULL,
+    KoniecDostepnosci date  NOT NULL,
+    CONSTRAINT Lokata_pk PRIMARY KEY (IdLokata)
+) ;
 
--- Table: Obywatelstwo_dict
-CREATE TABLE Obywatelstwo_dict
-(
-  key   varchar2(2) NOT NULL,
-  value varchar2(50) NOT NULL,
-  CONSTRAINT Obywatelstwo_dict_pk PRIMARY KEY (key)
-);
+-- Table: ObywatelstwoDict
+CREATE TABLE ObywatelstwoDict (
+    Key varchar2(2)  NOT NULL,
+    Value varchar2(50)  NOT NULL,
+    CONSTRAINT ObywatelstwoDict_pk PRIMARY KEY (Key)
+) ;
 
 -- Table: Operacja
-CREATE TABLE Operacja
-(
-  id                   integer   NOT NULL,
-  dzienny_nr_operacji  integer   NOT NULL,
-  typ_operacji_key     varchar2(2) NOT NULL,
-  nadawca_id           integer   NOT NULL,
-  odbiorcaa_id         integer   NOT NULL,
-  kwota                float(30) NOT NULL,
-  opis                 varchar2(500) NOT NULL,
-  Kategoria_key        varchar2(2) NOT NULL,
-  Klient_id            integer   NOT NULL,
-  rodzaj_platnosci_key varchar2(2) NOT NULL,
-  czas_zlecenia        timestamp NOT NULL,
-  data_zaksiegowania   date      NOT NULL,
-  CONSTRAINT Operacja_pk PRIMARY KEY (id)
-);
+CREATE TABLE Operacja (
+    IdOperacja integer  NOT NULL,
+    DziennyNrOperacji integer  NOT NULL,
+    Kwota float(30)  NOT NULL,
+    Opis varchar2(500)  NOT NULL,
+    CzasZlecenia timestamp  NOT NULL,
+    DataZaksiegowania date  NOT NULL,
+    RodzajOperacjiDictKey varchar2(2)  NOT NULL,
+    OperacjaDictKey varchar2(2)  NOT NULL,
+    KategoriaDictKey varchar2(2)  NOT NULL,
+    PlatnoscDictKey varchar2(2)  NOT NULL,
+    IdRachunek integer  NOT NULL,
+    IdIdentyfikatorKonta integer  NOT NULL,
+    IdKlient integer  NOT NULL,
+    CONSTRAINT Operacja_pk PRIMARY KEY (IdOperacja)
+) ;
 
--- Table: Operacja_dict
-CREATE TABLE Operacja_dict
-(
-  key   varchar2(2) NOT NULL,
-  value varchar2(50) NOT NULL,
-  CONSTRAINT Operacja_dict_pk PRIMARY KEY (key)
-);
+-- Table: OperacjaDict
+CREATE TABLE OperacjaDict (
+    Key varchar2(2)  NOT NULL,
+    Value varchar2(50)  NOT NULL,
+    CONSTRAINT OperacjaDict_pk PRIMARY KEY (Key)
+) ;
 
--- Table: Platnosc_dict
-CREATE TABLE Platnosc_dict
-(
-  key   varchar2(2) NOT NULL,
-  value varchar2(50) NOT NULL,
-  CONSTRAINT Platnosc_dict_pk PRIMARY KEY (key)
-);
+-- Table: PlatnoscDict
+CREATE TABLE PlatnoscDict (
+    Key varchar2(2)  NOT NULL,
+    Value varchar2(50)  NOT NULL,
+    CONSTRAINT PlatnoscDict_pk PRIMARY KEY (Key)
+) ;
 
 -- Table: Rachunek
-CREATE TABLE Rachunek
-(
-  id                       integer   NOT NULL,
-  nr_rachunku              integer   NOT NULL,
-  rodzaj_rachunku_key      varchar2(2) NOT NULL,
-  stan_konta               float(30) NOT NULL,
-  oprocentowanie           float     NOT NULL,
-  data_zamkniecia_rachunku date NULL,
-  CONSTRAINT Rachunek_pk PRIMARY KEY (id)
-);
+CREATE TABLE Rachunek (
+    IdRachunek integer  NOT NULL,
+    NrRachunku integer  NOT NULL,
+    StanKonta float(30)  NOT NULL,
+    Oprocentowanie float  NOT NULL,
+    DataZamknieciaRachunku date  NULL,
+    RachunekDictKey varchar2(2)  NOT NULL,
+    CONSTRAINT Rachunek_pk PRIMARY KEY (IdRachunek)
+) ;
+
+-- Table: RachunekDict
+CREATE TABLE RachunekDict (
+    Key varchar2(2)  NOT NULL,
+    Value varchar2(50)  NOT NULL,
+    CONSTRAINT RachunekDict_pk PRIMARY KEY (Key)
+) ;
 
 -- Table: Rachunek_Operacja
-CREATE TABLE Rachunek_Operacja
-(
-  id          integer NOT NULL,
-  Operacja_id integer NOT NULL,
-  Rachunek_id integer NOT NULL,
-  CONSTRAINT Rachunek_Operacja_pk PRIMARY KEY (id)
-);
+CREATE TABLE Rachunek_Operacja (
+    IdRachunek_Operacja integer  NOT NULL,
+    IdRachunek integer  NOT NULL,
+    IdOperacja integer  NOT NULL,
+    CONSTRAINT Rachunek_Operacja_pk PRIMARY KEY (IdRachunek_Operacja)
+) ;
 
--- Table: Rachunek_dict
-CREATE TABLE Rachunek_dict
-(
-  key   varchar2(2) NOT NULL,
-  value varchar2(50) NOT NULL,
-  CONSTRAINT Rachunek_dict_pk PRIMARY KEY (key)
-);
+-- Table: RodzajOperacjiDict
+CREATE TABLE RodzajOperacjiDict (
+    Key varchar2(2)  NOT NULL,
+    Value varchar2(50)  NOT NULL,
+    CONSTRAINT RodzajOperacjiDict_pk PRIMARY KEY (Key)
+) ;
 
--- Table: Stan_cywilny_dict
-CREATE TABLE Stan_cywilny_dict
-(
-  key   varchar2(2) NOT NULL,
-  value varchar2(50) NOT NULL,
-  CONSTRAINT Stan_cywilny_dict_pk PRIMARY KEY (key)
-);
+-- Table: StanCywilnyDict
+CREATE TABLE StanCywilnyDict (
+    Key varchar2(2)  NOT NULL,
+    Value varchar2(50)  NOT NULL,
+    CONSTRAINT StanCywilnyDict_pk PRIMARY KEY (Key)
+) ;
 
 -- Table: Telefon
-CREATE TABLE Telefon
-(
-  id    integer NOT NULL,
-  numer varchar2(20) NOT NULL,
-  CONSTRAINT Telefon_pk PRIMARY KEY (id)
-);
+CREATE TABLE Telefon (
+    IdTelefon integer  NOT NULL,
+    Numer varchar2(20)  NOT NULL,
+    CzyGlowny varchar2(1)  NOT NULL,
+    Klient_IdKlient integer  NOT NULL,
+    CONSTRAINT Telefon_pk PRIMARY KEY (IdTelefon)
+) ;
 
 -- Table: Urzad_skarbowy
-CREATE TABLE Urzad_skarbowy
-(
-  id       integer NOT NULL,
-  nazwa    varchar2(50) NOT NULL,
-  Adres_id integer NOT NULL,
-  CONSTRAINT Urzad_skarbowy_pk PRIMARY KEY (id)
-);
-
--- Table: Zgoda_marketingowe
-CREATE TABLE Zgoda_marketingowe
-(
-  id      integer NOT NULL,
-  zgoda_1 varchar2(1) NOT NULL,
-  zgoda_2 varchar2(1) NOT NULL,
-  zgoda_3 varchar2(1) NOT NULL,
-  CONSTRAINT Zgoda_marketingowe_pk PRIMARY KEY (id)
-);
+CREATE TABLE Urzad_skarbowy (
+    IdUrzadSkarbowy integer  NOT NULL,
+    Nazwa varchar2(50)  NOT NULL,
+    IdAdres integer  NOT NULL,
+    CONSTRAINT Urzad_skarbowy_pk PRIMARY KEY (IdUrzadSkarbowy)
+) ;
 
 -- foreign keys
--- Reference: Adres_Adres_dict (table: Adres)
-ALTER TABLE Adres
-  ADD CONSTRAINT Adres_Adres_dict
-    FOREIGN KEY (typ_adresu)
-      REFERENCES Adres_dict (key);
+-- Reference: Adres_Dict (table: Adres)
+ALTER TABLE Adres ADD CONSTRAINT Adres_Dict
+    FOREIGN KEY (AdresDictKey)
+    REFERENCES AdresDict (Key);
 
--- Reference: Bank_dict_Adres (table: Bank_dict)
-ALTER TABLE Bank_dict
-  ADD CONSTRAINT Bank_dict_Adres
-    FOREIGN KEY (adres_siedziby_banku)
-      REFERENCES Adres (id);
+-- Reference: BankDict_Adres (table: BankDict)
+ALTER TABLE BankDict ADD CONSTRAINT BankDict_Adres
+    FOREIGN KEY (IdAdres)
+    REFERENCES Adres (IdAdres);
 
--- Reference: Identyfikator__dict (table: Identyfikator)
-ALTER TABLE Identyfikator
-  ADD CONSTRAINT Identyfikator__dict
-    FOREIGN KEY (Identygikator_key)
-      REFERENCES Identygikator_dict (key);
+-- Reference: Email_Klient (table: Email)
+ALTER TABLE Email ADD CONSTRAINT Email_Klient
+    FOREIGN KEY (Klient_IdKlient)
+    REFERENCES Klient (IdKlient);
 
--- Reference: Identyfikator_konta_Adres (table: Identyfikator_konta)
-ALTER TABLE Identyfikator_konta
-  ADD CONSTRAINT Identyfikator_konta_Adres
-    FOREIGN KEY (Adres_id)
-      REFERENCES Adres (id);
+-- Reference: IdentyfikatorKonta_Adres (table: IdentyfikatorKonta)
+ALTER TABLE IdentyfikatorKonta ADD CONSTRAINT IdentyfikatorKonta_Adres
+    FOREIGN KEY (IdAdres)
+    REFERENCES Adres (IdAdres);
 
--- Reference: Identyfikator_konta_Bank_dict (table: Identyfikator_konta)
-ALTER TABLE Identyfikator_konta
-  ADD CONSTRAINT Identyfikator_konta_Bank_dict
-    FOREIGN KEY (Bank_key)
-      REFERENCES Bank_dict (key);
+-- Reference: IdentyfikatorKonta_BankDict (table: IdentyfikatorKonta)
+ALTER TABLE IdentyfikatorKonta ADD CONSTRAINT IdentyfikatorKonta_BankDict
+    FOREIGN KEY (BankDictKey)
+    REFERENCES BankDict (Key);
 
--- Reference: Karta_Karta_dict (table: Karta)
-ALTER TABLE Karta
-  ADD CONSTRAINT Karta_Karta_dict
-    FOREIGN KEY (typ_karty_key)
-      REFERENCES Karta_dict (key);
+-- Reference: Identyfikator_Dict (table: Identyfikator)
+ALTER TABLE Identyfikator ADD CONSTRAINT Identyfikator_Dict
+    FOREIGN KEY (IdentyfikatorDictKey)
+    REFERENCES IdentyfikatorDict (Key);
+
+-- Reference: Karta_KartaDict (table: Karta)
+ALTER TABLE Karta ADD CONSTRAINT Karta_KartaDict
+    FOREIGN KEY (KartaDictKey)
+    REFERENCES KartaDict (Key);
 
 -- Reference: Karta_Klient (table: Karta)
-ALTER TABLE Karta
-  ADD CONSTRAINT Karta_Klient
-    FOREIGN KEY (wlasciciel_karty_id)
-      REFERENCES Klient (id);
+ALTER TABLE Karta ADD CONSTRAINT Karta_Klient
+    FOREIGN KEY (IdKlient)
+    REFERENCES Klient (IdKlient);
 
 -- Reference: Karta_Rachunek (table: Karta)
-ALTER TABLE Karta
-  ADD CONSTRAINT Karta_Rachunek
-    FOREIGN KEY (podpiety_rachunek_id)
-      REFERENCES Rachunek (id);
+ALTER TABLE Karta ADD CONSTRAINT Karta_Rachunek
+    FOREIGN KEY (IdRachunek)
+    REFERENCES Rachunek (IdRachunek);
 
--- Reference: Klient_Adres (table: Dane_osobowe)
-ALTER TABLE Dane_osobowe
-  ADD CONSTRAINT Klient_Adres
-    FOREIGN KEY (Adres_id)
-      REFERENCES Adres (id);
+-- Reference: Klient_Adres (table: Klient)
+ALTER TABLE Klient ADD CONSTRAINT Klient_Adres
+    FOREIGN KEY (IdAdres)
+    REFERENCES Adres (IdAdres);
 
--- Reference: Klient_Dane_osobowe (table: Klient)
-ALTER TABLE Klient
-  ADD CONSTRAINT Klient_Dane_osobowe
-    FOREIGN KEY (Dane_osobowe_id)
-      REFERENCES Dane_osobowe (id);
-
--- Reference: Klient_Logowanie (table: Klient)
-ALTER TABLE Klient
-  ADD CONSTRAINT Klient_Logowanie
-    FOREIGN KEY (Logowanie_id)
-      REFERENCES Logowanie (id);
+-- Reference: Klient_Identyfikator (table: Klient)
+ALTER TABLE Klient ADD CONSTRAINT Klient_Identyfikator
+    FOREIGN KEY (IdIdentyfikator)
+    REFERENCES Identyfikator (IdIdentyfikator);
 
 -- Reference: Klient_Lokata_Klient (table: Klient_Lokata)
-ALTER TABLE Klient_Lokata
-  ADD CONSTRAINT Klient_Lokata_Klient
-    FOREIGN KEY (Klient_id)
-      REFERENCES Klient (id);
+ALTER TABLE Klient_Lokata ADD CONSTRAINT Klient_Lokata_Klient
+    FOREIGN KEY (IdKlient)
+    REFERENCES Klient (IdKlient);
 
 -- Reference: Klient_Lokata_Lokata (table: Klient_Lokata)
-ALTER TABLE Klient_Lokata
-  ADD CONSTRAINT Klient_Lokata_Lokata
-    FOREIGN KEY (Lokata_id)
-      REFERENCES Lokata (id);
+ALTER TABLE Klient_Lokata ADD CONSTRAINT Klient_Lokata_Lokata
+    FOREIGN KEY (IdLokata)
+    REFERENCES Lokata (IdLokata);
 
--- Reference: Klient_Obywatelstwo_dict (table: Dane_osobowe)
-ALTER TABLE Dane_osobowe
-  ADD CONSTRAINT Klient_Obywatelstwo_dict
-    FOREIGN KEY (Obywatelstwo_key)
-      REFERENCES Obywatelstwo_dict (key);
+-- Reference: Klient_ObywatelstwoDict (table: Klient)
+ALTER TABLE Klient ADD CONSTRAINT Klient_ObywatelstwoDict
+    FOREIGN KEY (ObywatelstwoDictKey)
+    REFERENCES ObywatelstwoDict (Key);
 
 -- Reference: Klient_Rachunek_Klient (table: Klient_Rachunek)
-ALTER TABLE Klient_Rachunek
-  ADD CONSTRAINT Klient_Rachunek_Klient
-    FOREIGN KEY (Klient_id)
-      REFERENCES Klient (id);
+ALTER TABLE Klient_Rachunek ADD CONSTRAINT Klient_Rachunek_Klient
+    FOREIGN KEY (IdKlient)
+    REFERENCES Klient (IdKlient);
 
 -- Reference: Klient_Rachunek_Rachunek (table: Klient_Rachunek)
-ALTER TABLE Klient_Rachunek
-  ADD CONSTRAINT Klient_Rachunek_Rachunek
-    FOREIGN KEY (Rachunek_id)
-      REFERENCES Rachunek (id);
+ALTER TABLE Klient_Rachunek ADD CONSTRAINT Klient_Rachunek_Rachunek
+    FOREIGN KEY (IdRachunek)
+    REFERENCES Rachunek (IdRachunek);
 
--- Reference: Klient_Zgoda_marketingowe (table: Klient)
-ALTER TABLE Klient
-  ADD CONSTRAINT Klient_Zgoda_marketingowe
-    FOREIGN KEY (Zgoda_marketingowe_id)
-      REFERENCES Zgoda_marketingowe (id);
+-- Reference: Klient_StanCywilnyDict (table: Klient)
+ALTER TABLE Klient ADD CONSTRAINT Klient_StanCywilnyDict
+    FOREIGN KEY (StanCywilnyDictKey)
+    REFERENCES StanCywilnyDict (Key);
 
--- Reference: Operacja_Dane_nadawcy (table: Operacja)
-ALTER TABLE Operacja
-  ADD CONSTRAINT Operacja_Dane_nadawcy
-    FOREIGN KEY (nadawca_id)
-      REFERENCES Identyfikator_konta (id);
+-- Reference: Klient_Urzad_skarbowy (table: Klient)
+ALTER TABLE Klient ADD CONSTRAINT Klient_Urzad_skarbowy
+    FOREIGN KEY (IdUrzadSkarbowy)
+    REFERENCES Urzad_skarbowy (IdUrzadSkarbowy);
 
--- Reference: Operacja_Dane_odbiorcy (table: Operacja)
-ALTER TABLE Operacja
-  ADD CONSTRAINT Operacja_Dane_odbiorcy
-    FOREIGN KEY (odbiorcaa_id)
-      REFERENCES Identyfikator_konta (id);
+-- Reference: Operacja_IdentyfikatorKonta (table: Operacja)
+ALTER TABLE Operacja ADD CONSTRAINT Operacja_IdentyfikatorKonta
+    FOREIGN KEY (IdIdentyfikatorKonta)
+    REFERENCES IdentyfikatorKonta (IdIdentyfikatorKonta);
 
--- Reference: Operacja_Kategoria_dict (table: Operacja)
-ALTER TABLE Operacja
-  ADD CONSTRAINT Operacja_Kategoria_dict
-    FOREIGN KEY (Kategoria_key)
-      REFERENCES Kategoria_dict (key);
+-- Reference: Operacja_KategoriaDict (table: Operacja)
+ALTER TABLE Operacja ADD CONSTRAINT Operacja_KategoriaDict
+    FOREIGN KEY (KategoriaDictKey)
+    REFERENCES KategoriaDict (Key);
 
 -- Reference: Operacja_Klient (table: Operacja)
-ALTER TABLE Operacja
-  ADD CONSTRAINT Operacja_Klient
-    FOREIGN KEY (Klient_id)
-      REFERENCES Klient (id);
+ALTER TABLE Operacja ADD CONSTRAINT Operacja_Klient
+    FOREIGN KEY (IdKlient)
+    REFERENCES Klient (IdKlient);
 
--- Reference: Operacja_Operacja_dict (table: Operacja)
-ALTER TABLE Operacja
-  ADD CONSTRAINT Operacja_Operacja_dict
-    FOREIGN KEY (typ_operacji_key)
-      REFERENCES Operacja_dict (key);
+-- Reference: Operacja_OperacjaDict (table: Operacja)
+ALTER TABLE Operacja ADD CONSTRAINT Operacja_OperacjaDict
+    FOREIGN KEY (OperacjaDictKey)
+    REFERENCES OperacjaDict (Key);
 
--- Reference: Operacja_Platnosc_dict (table: Operacja)
-ALTER TABLE Operacja
-  ADD CONSTRAINT Operacja_Platnosc_dict
-    FOREIGN KEY (rodzaj_platnosci_key)
-      REFERENCES Platnosc_dict (key);
+-- Reference: Operacja_PlatnoscDict (table: Operacja)
+ALTER TABLE Operacja ADD CONSTRAINT Operacja_PlatnoscDict
+    FOREIGN KEY (PlatnoscDictKey)
+    REFERENCES PlatnoscDict (Key);
 
--- Reference: Osoba_Identyfikator (table: Dane_osobowe)
-ALTER TABLE Dane_osobowe
-  ADD CONSTRAINT Osoba_Identyfikator
-    FOREIGN KEY (Identyfikator_id)
-      REFERENCES Identyfikator (id);
+-- Reference: Operacja_Rachunek (table: Operacja)
+ALTER TABLE Operacja ADD CONSTRAINT Operacja_Rachunek
+    FOREIGN KEY (IdRachunek)
+    REFERENCES Rachunek (IdRachunek);
 
--- Reference: Osoba_Stan_cywilny_dict (table: Dane_osobowe)
-ALTER TABLE Dane_osobowe
-  ADD CONSTRAINT Osoba_Stan_cywilny_dict
-    FOREIGN KEY (Stan_cywilny_key)
-      REFERENCES Stan_cywilny_dict (key);
-
--- Reference: Osoba_Urzad_skarbowy (table: Dane_osobowe)
-ALTER TABLE Dane_osobowe
-  ADD CONSTRAINT Osoba_Urzad_skarbowy
-    FOREIGN KEY (Urzad_skarbowy_id)
-      REFERENCES Urzad_skarbowy (id);
-
--- Reference: Osoba_email_Email (table: Dane_osobowe_email)
-ALTER TABLE Dane_osobowe_email
-  ADD CONSTRAINT Osoba_email_Email
-    FOREIGN KEY (Email_id)
-      REFERENCES Email (id);
-
--- Reference: Osoba_email_Osoba (table: Dane_osobowe_email)
-ALTER TABLE Dane_osobowe_email
-  ADD CONSTRAINT Osoba_email_Osoba
-    FOREIGN KEY (Osoba_id)
-      REFERENCES Dane_osobowe (id);
-
--- Reference: Osoba_telefon_Osoba (table: Dane_osobowe_telefon)
-ALTER TABLE Dane_osobowe_telefon
-  ADD CONSTRAINT Osoba_telefon_Osoba
-    FOREIGN KEY (Osoba_id)
-      REFERENCES Dane_osobowe (id);
-
--- Reference: Osoba_telefon_Telefon (table: Dane_osobowe_telefon)
-ALTER TABLE Dane_osobowe_telefon
-  ADD CONSTRAINT Osoba_telefon_Telefon
-    FOREIGN KEY (Telefon_id)
-      REFERENCES Telefon (id);
+-- Reference: Operacja_RodzajOperacjiDict (table: Operacja)
+ALTER TABLE Operacja ADD CONSTRAINT Operacja_RodzajOperacjiDict
+    FOREIGN KEY (RodzajOperacjiDictKey)
+    REFERENCES RodzajOperacjiDict (Key);
 
 -- Reference: Rachunek_Operacja_Operacja (table: Rachunek_Operacja)
-ALTER TABLE Rachunek_Operacja
-  ADD CONSTRAINT Rachunek_Operacja_Operacja
-    FOREIGN KEY (Operacja_id)
-      REFERENCES Operacja (id);
+ALTER TABLE Rachunek_Operacja ADD CONSTRAINT Rachunek_Operacja_Operacja
+    FOREIGN KEY (IdOperacja)
+    REFERENCES Operacja (IdOperacja);
 
 -- Reference: Rachunek_Operacja_Rachunek (table: Rachunek_Operacja)
-ALTER TABLE Rachunek_Operacja
-  ADD CONSTRAINT Rachunek_Operacja_Rachunek
-    FOREIGN KEY (Rachunek_id)
-      REFERENCES Rachunek (id);
+ALTER TABLE Rachunek_Operacja ADD CONSTRAINT Rachunek_Operacja_Rachunek
+    FOREIGN KEY (IdRachunek)
+    REFERENCES Rachunek (IdRachunek);
 
--- Reference: Rachunek_Rachunek_dict (table: Rachunek)
-ALTER TABLE Rachunek
-  ADD CONSTRAINT Rachunek_Rachunek_dict
-    FOREIGN KEY (rodzaj_rachunku_key)
-      REFERENCES Rachunek_dict (key);
+-- Reference: Rachunek_RachunekDict (table: Rachunek)
+ALTER TABLE Rachunek ADD CONSTRAINT Rachunek_RachunekDict
+    FOREIGN KEY (RachunekDictKey)
+    REFERENCES RachunekDict (Key);
+
+-- Reference: Telefon_Klient (table: Telefon)
+ALTER TABLE Telefon ADD CONSTRAINT Telefon_Klient
+    FOREIGN KEY (Klient_IdKlient)
+    REFERENCES Klient (IdKlient);
 
 -- Reference: Urzad_skarbowy_Adres (table: Urzad_skarbowy)
-ALTER TABLE Urzad_skarbowy
-  ADD CONSTRAINT Urzad_skarbowy_Adres
-    FOREIGN KEY (Adres_id)
-      REFERENCES Adres (id);
+ALTER TABLE Urzad_skarbowy ADD CONSTRAINT Urzad_skarbowy_Adres
+    FOREIGN KEY (IdAdres)
+    REFERENCES Adres (IdAdres);
 
 -- End of file.
 
