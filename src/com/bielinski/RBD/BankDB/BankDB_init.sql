@@ -42,8 +42,9 @@ INSERT INTO Identyfikator VALUES (5, 'DDD333333', 'DOW');
 INSERT INTO Identyfikator VALUES (6, 'EEE444444', 'DOW');
 INSERT INTO Identyfikator VALUES (7, 'FFF555555', 'DOW');
 INSERT INTO Identyfikator VALUES (8, 'GGG666666', 'DOW');
-INSERT INTO Identyfikator VALUES (9, 'HH7777777', 'PAS');
-INSERT INTO Identyfikator VALUES (10, 'JJ8888888', 'PAS');
+INSERT INTO Identyfikator VALUES (9, 'KKK999999', 'PAS');
+INSERT INTO Identyfikator VALUES (10, 'HH7777777', 'PAS');
+INSERT INTO Identyfikator VALUES (11, 'JJ8888888', 'PAS');
 
 -- Table: IdentyfikatorKonta
 INSERT INTO IdentyfikatorKonta VALUES (1, 1234567890123456, 'PKO', 1);
@@ -70,7 +71,7 @@ INSERT INTO KartaDict VALUES ('KKR','Karta kredytowa');
 INSERT INTO KategoriaDict VALUES ('WYN', 'Wynagrodzenie');
 INSERT INTO KategoriaDict VALUES ('ZAK', 'Zakupy');
 INSERT INTO KategoriaDict VALUES ('RAC', 'Rachunki');
-INSERT INTO KategoriaDict VALUES ('ORP', 'Oprocentowanie');
+INSERT INTO KategoriaDict VALUES ('OPR', 'Oprocentowanie');
 
 -- Table: Lokata
 INSERT INTO Lokata VALUES (1, 0.7, 100.00, 100000.00, 3, 36, TO_DATE('01/January/2018'), TO_DATE('01/January/2020'));
@@ -431,9 +432,9 @@ INSERT INTO Email VALUES (8, 'dziennikarz@com.pl', 'Y', 8);
 INSERT INTO Email VALUES (9, 'poczta@com.pl', 'Y', 9);
 INSERT INTO Email VALUES (10, 'zaplecze@com.pl', 'Y', 10);
 INSERT INTO Email VALUES (11, 'spam@com.pl', 'N', 11);
-INSERT INTO Email VALUES (12, 'sample@com.pl', 'N', 12);
-INSERT INTO Email VALUES (13, 'xyz@com.pl', 'N', 13);
-INSERT INTO Email VALUES (14, 'koszary@com.pl', 'N', 14);
+INSERT INTO Email VALUES (12, 'sample@com.pl', 'N', 11);
+INSERT INTO Email VALUES (13, 'xyz@com.pl', 'N', 8);
+INSERT INTO Email VALUES (14, 'koszary@com.pl', 'N', 5);
 
 -- Table: Klient_Lokata
 INSERT INTO Klient_Lokata VALUES (1, 1000.00, 18, TO_DATE('11/January/2018'), 1, 1);
