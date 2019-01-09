@@ -29,21 +29,9 @@ INSERT INTO BankDict VALUES ('WBK', 'Santander Bank Polska', 3);
 INSERT INTO BankDict VALUES ('BRE', 'mBank', 4);
 INSERT INTO BankDict VALUES ('ING', 'ING Bank Śląski', 5);
 
--- Table: Email
-INSERT INTO Email VALUES (1, 'email@com.pl', 'Y', 1);
-INSERT INTO Email VALUES (2, 'bank@com.pl', 'Y', 2);
-INSERT INTO Email VALUES (3, 'barman@com.pl', 'Y', 3);
-INSERT INTO Email VALUES (4, 'programista@com.pl', 'Y', 4);
-INSERT INTO Email VALUES (5, 'kucharz@com.pl', 'Y', 5);
-INSERT INTO Email VALUES (6, 'dentysta@com.pl', 'Y', 6);
-INSERT INTO Email VALUES (7, 'rower@com.pl', 'Y', 7);
-INSERT INTO Email VALUES (8, 'dziennikarz@com.pl', 'Y', 8);
-INSERT INTO Email VALUES (9, 'poczta@com.pl', 'Y', 9);
-INSERT INTO Email VALUES (10, 'zaplecze@com.pl', 'Y', 10);
-INSERT INTO Email VALUES (11, 'spam@com.pl', 'N', 11);
-INSERT INTO Email VALUES (12, 'sample@com.pl', 'N', 12);
-INSERT INTO Email VALUES (13, 'xyz@com.pl', 'N', 13);
-INSERT INTO Email VALUES (14, 'koszary@com.pl', 'N', 14);
+-- Table: IdentyfikatorDict
+INSERT INTO IdentyfikatorDict VALUES ('DOW','Dowód');
+INSERT INTO IdentyfikatorDict VALUES ('PAS','Paszport');
 
 -- Table: Identyfikator
 INSERT INTO Identyfikator VALUES (1, 'ABC123456', 'DOW');
@@ -56,10 +44,6 @@ INSERT INTO Identyfikator VALUES (7, 'FFF555555', 'DOW');
 INSERT INTO Identyfikator VALUES (8, 'GGG666666', 'DOW');
 INSERT INTO Identyfikator VALUES (9, 'HH7777777', 'PAS');
 INSERT INTO Identyfikator VALUES (10, 'JJ8888888', 'PAS');
-
--- Table: IdentyfikatorDict
-INSERT INTO IdentyfikatorDict VALUES ('DOW','Dowód');
-INSERT INTO IdentyfikatorDict VALUES ('PAS','Paszport');
 
 -- Table: IdentyfikatorKonta
 INSERT INTO IdentyfikatorKonta VALUES (1, 1234567890123456, 'PKO', 1);
@@ -78,38 +62,6 @@ INSERT INTO IdentyfikatorKonta VALUES (13, 5484654567321232, 'ING', 4);
 INSERT INTO IdentyfikatorKonta VALUES (14, 9556456325656235, 'ING', 5);
 INSERT INTO IdentyfikatorKonta VALUES (15, 1696543165549695, 'ING', 6);
 
--- Table: Karta
-INSERT INTO Karta VALUES (1, 1696543154549695, NULL, 0.00, 'Y', 'Y', TO_DATE('01/February/2020'), 'N', 'KPL', 1);
-INSERT INTO Karta VALUES (1, 8956419653496555, NULL, 0.00, 'Y', 'Y', TO_DATE('01/February/2021'), 'N', 'KPL', 2);
-INSERT INTO Karta VALUES (1, 9865416541654965, NULL, 0.00, 'Y', 'N', TO_DATE('01/March/2019'), 'N', 'KPL', 3);
-INSERT INTO Karta VALUES (1, 8675415324159649, NULL, 0.00, 'N', 'Y', TO_DATE('01/September/2020'), 'N', 'KPL', 4);
-INSERT INTO Karta VALUES (1, 8564987495241065, NULL, 0.00, 'Y', 'Y', TO_DATE('01/January/2020'), 'N', 'KPL', 5);
-INSERT INTO Karta VALUES (1, 1956123089456162, NULL, 0.00, 'Y', 'Y', TO_DATE('01/June/2021'), 'N', 'KPL', 6);
-INSERT INTO Karta VALUES (1, 7095641603165419, NULL, 0.00, 'Y', 'Y', TO_DATE('01/February/2019'), 'N', 'KPL', 7);
-INSERT INTO Karta VALUES (1, 8416521652985462, NULL, 0.00, 'N', 'N', TO_DATE('01/June/2020'), 'N', 'KPL', 8);
-INSERT INTO Karta VALUES (1, 8564102316541623, NULL, 0.00, 'Y', 'Y', TO_DATE('01/February/2021'), 'N', 'KPL', 9);
-INSERT INTO Karta VALUES (1, 8954129845456423, NULL, 0.00, 'Y', 'Y', TO_DATE('01/June/2020'), 'N', 'KPL', 10);
-INSERT INTO Karta VALUES (1, 9854163248965416, NULL, 0.00, 'Y', 'Y', TO_DATE('01/September/2021'), 'N', 'KPL', 11);
-INSERT INTO Karta VALUES (1, 3219867456231654, NULL, 0.00, 'Y', 'N', TO_DATE('01/June/2020'), 'N', 'KPL', 12);
-INSERT INTO Karta VALUES (1, 1956421896541632, NULL, 0.00, 'N', 'Y', TO_DATE('01/August/2019'), 'N', 'KPL', 13);
-INSERT INTO Karta VALUES (1, 8945234895465433, NULL, 0.00, 'Y', 'Y', TO_DATE('01/December/2021'), 'N', 'KPL', 14);
-INSERT INTO Karta VALUES (1, 2985421965416549, NULL, 0.00, 'Y', 'Y', TO_DATE('01/September/2022'), 'N', 'KPL', 15);
-INSERT INTO Karta VALUES (1, 5372465324195649, NULL, 0.00, 'Y', 'Y', TO_DATE('01/June/2021'), 'N', 'KPL', 16);
-INSERT INTO Karta VALUES (1, 2965742632491056, NULL, 0.00, 'Y', 'Y', TO_DATE('01/October/2020'), 'N', 'KPL', 17);
-INSERT INTO Karta VALUES (1, 9485641065469840, NULL, 0.00, 'Y', 'N', TO_DATE('01/June/2020'), 'N', 'KPL', 18);
-INSERT INTO Karta VALUES (1, 9876451609856423, NULL, 0.00, 'Y', 'Y', TO_DATE('01/June/2021'), 'N', 'KPL', 19);
-INSERT INTO Karta VALUES (1, 9865406541650654, NULL, 0.00, 'Y', 'Y', TO_DATE('01/November/2019'), 'N', 'KPL', 20);
-INSERT INTO Karta VALUES (1, 8954095641906564, NULL, 0.00, 'Y', 'Y', TO_DATE('01/December/2019'), 'N', 'KPL', 21);
-INSERT INTO Karta VALUES (1, 9564109564985641, NULL, 0.00, 'Y', 'Y', TO_DATE('01/September/2020'), 'N', 'KPL', 22);
-INSERT INTO Karta VALUES (1, 5740561654235906, NULL, 0.00, 'N', 'Y', TO_DATE('01/June/2021'), 'N', 'KPL', 23);
-INSERT INTO Karta VALUES (1, 8564019564105616, NULL, 0.00, 'Y', 'Y', TO_DATE('01/February/2020'), 'N', 'KPL', 24);
-INSERT INTO Karta VALUES (1, 8564019564105616, NULL, 5000.00, 'Y', 'Y', TO_DATE('01/June/2020'), 'N', 'KKR', 24);
-INSERT INTO Karta VALUES (1, 8564019564105616, NULL, 10000.00, 'Y', 'Y', TO_DATE('01/February/2019'), 'N', 'KKR', 24);
-INSERT INTO Karta VALUES (1, 8564019564105616, NULL, 20000.00, 'Y', 'Y', TO_DATE('01/September/2021'), 'N', 'KKR', 24);
-INSERT INTO Karta VALUES (1, 8564019564105616, NULL, 10000.00, 'Y', 'Y', TO_DATE('01/December/2020'), 'N', 'KKR', 24);
-INSERT INTO Karta VALUES (1, 8564019564105616, NULL, 50000.00, 'Y', 'Y', TO_DATE('01/February/2021'), 'N', 'KKR', 24);
-INSERT INTO Karta VALUES (1, 8564019564105616, NULL, 250000.00, 'Y', 'Y', TO_DATE('01/November/2019'), 'Y', 'KPL', 24);
-
 -- Table: KartaDict
 INSERT INTO KartaDict VALUES ('KPL','Karta płatnicza');
 INSERT INTO KartaDict VALUES ('KKR','Karta kredytowa');
@@ -119,55 +71,6 @@ INSERT INTO KategoriaDict VALUES ('WYN', 'Wynagrodzenie');
 INSERT INTO KategoriaDict VALUES ('ZAK', 'Zakupy');
 INSERT INTO KategoriaDict VALUES ('RAC', 'Rachunki');
 INSERT INTO KategoriaDict VALUES ('ORP', 'Oprocentowanie');
-
--- Table: Klient
-INSERT INTO Klient VALUES (1, 'Stefan', 'Karol', 'Kowalski', 90020167890, 'Kazimierz', 'Teresa', 'Nowak', TO_DATE('01/February/1990'), 'Berlin', NULL, 'Y', 'POL', 'ZMW', 1, 1, 6, 6, 6);
-INSERT INTO Klient VALUES (2, 'Bogumił', 'Maria', 'Drewniany', 65090176654, 'Tadeusz', 'Janina', 'Kupiec', TO_DATE('01/September/1965'), 'Wrocław', NULL, 'Y', 'POL', 'ZMW', 2, 1, 6, 6, 6);
-INSERT INTO Klient VALUES (3, 'Anna', 'Karolina', 'Białek', 90030586332, 'Adam', 'Bogna', 'Mróz', TO_DATE('05/March/1990'), 'Lublin', NULL, 'Y', 'POL', 'ZMR', 3 , 1, 8, 8, 8);
-INSERT INTO Klient VALUES (4, 'Mariola', 'Weronika', 'Kurek', 80020525698, 'Marcin', 'Anna', 'Wiosenna', TO_DATE('05/February/1980'), 'Poznań', NULL, 'Y', 'POL', 'ZMR', 4 , 1, 8, 8, 8);
-INSERT INTO Klient VALUES (5, 'Zbigniew', 'Andrzej', 'Zawodowy', 69052500325, 'Mariusz', 'Karolina', 'Kochańska', TO_DATE('25/May/1969'), 'Lublin', NULL, 'Y', 'POL', 'ROZ', 5 , 1, 10, 10, 10);
-INSERT INTO Klient VALUES (6, 'Karina', 'Cyryla', 'Węgierska', 95011058332, 'Filip', 'Magda', 'Pień', TO_DATE('10/January/1995'), 'Warszawa', NULL, 'Y', 'POL', 'WOL', 6 , 1, 11, 11, 11);
-INSERT INTO Klient VALUES (7, 'Marta', 'Anna', 'Kluska', 96070822458, 'Andrzej', 'Monika', 'Ptak', TO_DATE('08/June/1996'), 'Otwock', NULL, 'Y', 'POL', 'WOL', 7 , 1, 12, 12, 12);
-INSERT INTO Klient VALUES (8, 'Lidia', 'Maria', 'Bąk', 6211042745, 'Karol', 'Klaudia', 'Kolorowa', TO_DATE('04/November/1962'), 'Puławy', NULL, 'Y', 'POL', 'SEP', 8 , 1, 13, 13, 13);
-INSERT INTO Klient VALUES (9, 'Magda', 'Rebeka', 'Cicha', 89120400125, 'Marcin', 'Daria', 'Mróz', TO_DATE('04/December/1989'), 'Paryż', NULL, 'Y', 'POL', 'WOL', 9 , 2, 14, 14, 14);
-INSERT INTO Klient VALUES (10, 'Krystian', 'Piotr', 'Mądry', 75030514236, 'Piotr', 'Marta', 'Ulicka', TO_DATE('05/March/1975'), 'Warszawa', NULL, 'Y', 'ENG', 'WDO', 10 , 2, 7, 7, 7);
-INSERT INTO Klient VALUES (11, 'Łukasz', 'Paweł', 'Nowak', 92111907850, 'Tomasz', 'Ewa', 'Filipska', TO_DATE('19/November/1992'), 'Moskwa', NULL, 'Y', 'USA', 'WOL', 11 , 2, 9, 9, 9);
-
--- Table: Klient_Lokata
-INSERT INTO Klient_Lokata VALUES (1, 1000.00, 18, TO_DATE('11/January/2018'), 1, 1);
-INSERT INTO Klient_Lokata VALUES (2, 2000.00, 36, TO_DATE('19/February/2018'), 1, 1);
-INSERT INTO Klient_Lokata VALUES (3, 5000.00, 12, TO_DATE('13/March/2018'), 1, 2);
-INSERT INTO Klient_Lokata VALUES (4, 10000.00, 48, TO_DATE('17/May/2018'), 1, 2);
-INSERT INTO Klient_Lokata VALUES (5, 20000.00, 15, TO_DATE('15/June/2018'), 1, 3);
-INSERT INTO Klient_Lokata VALUES (6, 50000.00, 19, TO_DATE('25/November/2018'), 1, 3);
-INSERT INTO Klient_Lokata VALUES (7, 100000.00, 17, TO_DATE('5/September/2018'), 1, 4);
-INSERT INTO Klient_Lokata VALUES (8, 200000.00, 25, TO_DATE('30/December/2018'), 1, 4);
-
--- Table: Klient_Rachunek
-INSERT INTO Klient_Rachunek VALUES (1, 1, 1);
-INSERT INTO Klient_Rachunek VALUES (2, 1, 2);
-INSERT INTO Klient_Rachunek VALUES (3, 2, 2);
-INSERT INTO Klient_Rachunek VALUES (4, 2, 3);
-INSERT INTO Klient_Rachunek VALUES (5, 3, 4);
-INSERT INTO Klient_Rachunek VALUES (6, 3, 4);
-INSERT INTO Klient_Rachunek VALUES (7, 4, 4);
-INSERT INTO Klient_Rachunek VALUES (8, 5, 5);
-INSERT INTO Klient_Rachunek VALUES (9, 5, 4);
-INSERT INTO Klient_Rachunek VALUES (10, 6, 6);
-INSERT INTO Klient_Rachunek VALUES (11, 6, 17);
-INSERT INTO Klient_Rachunek VALUES (12, 7, 7);
-INSERT INTO Klient_Rachunek VALUES (13, 7, 16);
-INSERT INTO Klient_Rachunek VALUES (14, 8, 8);
-INSERT INTO Klient_Rachunek VALUES (15, 8, 15);
-INSERT INTO Klient_Rachunek VALUES (16, 9, 9);
-INSERT INTO Klient_Rachunek VALUES (17, 9, 14);
-INSERT INTO Klient_Rachunek VALUES (18, 10, 10);
-INSERT INTO Klient_Rachunek VALUES (19, 10, 13);
-INSERT INTO Klient_Rachunek VALUES (20, 10, 20);
-INSERT INTO Klient_Rachunek VALUES (21, 11, 11);
-INSERT INTO Klient_Rachunek VALUES (22, 11, 12);
-INSERT INTO Klient_Rachunek VALUES (23, 11, 18);
-INSERT INTO Klient_Rachunek VALUES (24, 11, 19);
 
 -- Table: Lokata
 INSERT INTO Lokata VALUES (1, 0.7, 100.00, 100000.00, 3, 36, TO_DATE('01/January/2018'), TO_DATE('01/January/2020'));
@@ -364,6 +267,10 @@ INSERT INTO Operacja VALUES (179, 3547.00, 'comment', TO_DATE('20/December/2018'
 INSERT INTO Operacja VALUES (180, 19.00, 'comment', TO_DATE('21/December/2018'), 15);
 INSERT INTO Operacja VALUES (181, 65.00, 'comment', TO_DATE('27/December/2018'), 1);
 
+-- Table: PlatnoscDict
+INSERT INTO PlatnoscDict VALUES ('INT', 'Płatność internetowa');
+INSERT INTO PlatnoscDict VALUES ('KAR', 'Płatność kartą płatniczą');
+
 -- Table: OperacjaWychodzacaDane
 INSERT INTO OperacjaWychodzacaDane VALUES (1, TIMESTAMP '2018-01-01 09:26:50.12', 'KAR');
 INSERT INTO OperacjaWychodzacaDane VALUES (2, TIMESTAMP '2018-01-02 09:26:50.12', 'KAR');
@@ -456,9 +363,9 @@ INSERT INTO OperacjaWychodzacaDane VALUES (88, TIMESTAMP '2018-08-12 09:26:50.12
 INSERT INTO OperacjaWychodzacaDane VALUES (89, TIMESTAMP '2018-10-08 09:26:50.12', 'INT');
 INSERT INTO OperacjaWychodzacaDane VALUES (90, TIMESTAMP '2018-12-02 09:26:50.12', 'INT');
 
--- Table: PlatnoscDict
-INSERT INTO PlatnoscDict VALUES ('INT', 'Płatność internetowa');
-INSERT INTO PlatnoscDict VALUES ('KAR', 'Płatność kartą płatniczą');
+-- Table: RachunekDict
+INSERT INTO RachunekDict VALUES ('RIN', 'Rachunek internetowy');
+INSERT INTO RachunekDict VALUES ('ROS', 'Rachunek oszczędnościowy');
 
 -- Table: Rachunek
 INSERT INTO Rachunek VALUES (1, 1234567890123456, 0.00, 0.0, NULL, 'RIN');
@@ -482,9 +389,119 @@ INSERT INTO Rachunek VALUES (18, 7534261954299854, 9854613.19, 0.5, NULL, 'ROS')
 INSERT INTO Rachunek VALUES (19, 2964398675416549, 1596.64, 0.5, NULL, 'ROS');
 INSERT INTO Rachunek VALUES (20, 3587461596465749, 658413.15, 0.5, NULL, 'ROS');
 
--- Table: RachunekDict
-INSERT INTO RachunekDict VALUES ('RIN', 'Rachunek internetowy');
-INSERT INTO RachunekDict VALUES ('ROS', 'Rachunek oszczędnościowy');
+-- Table: RodzajOperacjiDict
+INSERT INTO RodzajOperacjiDict VALUES ('WYC', 'Przelew wychodzący');
+INSERT INTO RodzajOperacjiDict VALUES ('PRZ', 'Przelew przychodzący');
+INSERT INTO RodzajOperacjiDict VALUES ('PMR', 'Przelew między rachunkami');
+
+-- Table: StanCywilnyDict
+INSERT INTO StanCywilnyDict VALUES ('WOL', 'Panna/kawaler');
+INSERT INTO StanCywilnyDict VALUES ('ZMW', 'W związku małżeńskim-wspólnota majątkowa');
+INSERT INTO StanCywilnyDict VALUES ('ZMR', 'W związku małżeńskim-rozdzielność majątkowa');
+INSERT INTO StanCywilnyDict VALUES ('SEP', 'Separacja');
+INSERT INTO StanCywilnyDict VALUES ('WDO', 'Wdowa/wdowiec');
+INSERT INTO StanCywilnyDict VALUES ('ROZ', 'Rozwodnik/Rozwiedziony');
+
+-- Table: Urzad_skarbowy
+INSERT INTO Urzad_skarbowy VALUES (1, 'Warszawski US', 6);
+INSERT INTO Urzad_skarbowy VALUES (2, 'Polski US', 7);
+
+-- Table: Klient
+INSERT INTO Klient VALUES (1, 'Stefan', 'Karol', 'Kowalski', 90020167890, 'Kazimierz', 'Teresa', 'Nowak', TO_DATE('01/February/1990'), 'Berlin', NULL, 'Y', 'POL', 'ZMW', 1, 1, 6, 6, 6);
+INSERT INTO Klient VALUES (2, 'Bogumił', 'Maria', 'Drewniany', 65090176654, 'Tadeusz', 'Janina', 'Kupiec', TO_DATE('01/September/1965'), 'Wrocław', NULL, 'Y', 'POL', 'ZMW', 2, 1, 6, 6, 6);
+INSERT INTO Klient VALUES (3, 'Anna', 'Karolina', 'Białek', 90030586332, 'Adam', 'Bogna', 'Mróz', TO_DATE('05/March/1990'), 'Lublin', NULL, 'Y', 'POL', 'ZMR', 3 , 1, 8, 8, 8);
+INSERT INTO Klient VALUES (4, 'Mariola', 'Weronika', 'Kurek', 80020525698, 'Marcin', 'Anna', 'Wiosenna', TO_DATE('05/February/1980'), 'Poznań', NULL, 'Y', 'POL', 'ZMR', 4 , 1, 8, 8, 8);
+INSERT INTO Klient VALUES (5, 'Zbigniew', 'Andrzej', 'Zawodowy', 69052500325, 'Mariusz', 'Karolina', 'Kochańska', TO_DATE('25/May/1969'), 'Lublin', NULL, 'Y', 'POL', 'ROZ', 5 , 1, 10, 10, 10);
+INSERT INTO Klient VALUES (6, 'Karina', 'Cyryla', 'Węgierska', 95011058332, 'Filip', 'Magda', 'Pień', TO_DATE('10/January/1995'), 'Warszawa', NULL, 'Y', 'POL', 'WOL', 6 , 1, 11, 11, 11);
+INSERT INTO Klient VALUES (7, 'Marta', 'Anna', 'Kluska', 96070822458, 'Andrzej', 'Monika', 'Ptak', TO_DATE('08/June/1996'), 'Otwock', NULL, 'Y', 'POL', 'WOL', 7 , 1, 12, 12, 12);
+INSERT INTO Klient VALUES (8, 'Lidia', 'Maria', 'Bąk', 6211042745, 'Karol', 'Klaudia', 'Kolorowa', TO_DATE('04/November/1962'), 'Puławy', NULL, 'Y', 'POL', 'SEP', 8 , 1, 13, 13, 13);
+INSERT INTO Klient VALUES (9, 'Magda', 'Rebeka', 'Cicha', 89120400125, 'Marcin', 'Daria', 'Mróz', TO_DATE('04/December/1989'), 'Paryż', NULL, 'Y', 'POL', 'WOL', 9 , 2, 14, 14, 14);
+INSERT INTO Klient VALUES (10, 'Krystian', 'Piotr', 'Mądry', 75030514236, 'Piotr', 'Marta', 'Ulicka', TO_DATE('05/March/1975'), 'Warszawa', NULL, 'Y', 'ENG', 'WDO', 10 , 2, 7, 7, 7);
+INSERT INTO Klient VALUES (11, 'Łukasz', 'Paweł', 'Nowak', 92111907850, 'Tomasz', 'Ewa', 'Filipska', TO_DATE('19/November/1992'), 'Moskwa', NULL, 'Y', 'USA', 'WOL', 11 , 2, 9, 9, 9);
+
+-- Table: Email
+INSERT INTO Email VALUES (1, 'email@com.pl', 'Y', 1);
+INSERT INTO Email VALUES (2, 'bank@com.pl', 'Y', 2);
+INSERT INTO Email VALUES (3, 'barman@com.pl', 'Y', 3);
+INSERT INTO Email VALUES (4, 'programista@com.pl', 'Y', 4);
+INSERT INTO Email VALUES (5, 'kucharz@com.pl', 'Y', 5);
+INSERT INTO Email VALUES (6, 'dentysta@com.pl', 'Y', 6);
+INSERT INTO Email VALUES (7, 'rower@com.pl', 'Y', 7);
+INSERT INTO Email VALUES (8, 'dziennikarz@com.pl', 'Y', 8);
+INSERT INTO Email VALUES (9, 'poczta@com.pl', 'Y', 9);
+INSERT INTO Email VALUES (10, 'zaplecze@com.pl', 'Y', 10);
+INSERT INTO Email VALUES (11, 'spam@com.pl', 'N', 11);
+INSERT INTO Email VALUES (12, 'sample@com.pl', 'N', 12);
+INSERT INTO Email VALUES (13, 'xyz@com.pl', 'N', 13);
+INSERT INTO Email VALUES (14, 'koszary@com.pl', 'N', 14);
+
+-- Table: Klient_Lokata
+INSERT INTO Klient_Lokata VALUES (1, 1000.00, 18, TO_DATE('11/January/2018'), 1, 1);
+INSERT INTO Klient_Lokata VALUES (2, 2000.00, 36, TO_DATE('19/February/2018'), 1, 1);
+INSERT INTO Klient_Lokata VALUES (3, 5000.00, 12, TO_DATE('13/March/2018'), 1, 2);
+INSERT INTO Klient_Lokata VALUES (4, 10000.00, 48, TO_DATE('17/May/2018'), 1, 2);
+INSERT INTO Klient_Lokata VALUES (5, 20000.00, 15, TO_DATE('15/June/2018'), 1, 3);
+INSERT INTO Klient_Lokata VALUES (6, 50000.00, 19, TO_DATE('25/November/2018'), 1, 3);
+INSERT INTO Klient_Lokata VALUES (7, 100000.00, 17, TO_DATE('5/September/2018'), 1, 4);
+INSERT INTO Klient_Lokata VALUES (8, 200000.00, 25, TO_DATE('30/December/2018'), 1, 4);
+
+-- Table: Klient_Rachunek
+INSERT INTO Klient_Rachunek VALUES (1, 1, 1);
+INSERT INTO Klient_Rachunek VALUES (2, 1, 2);
+INSERT INTO Klient_Rachunek VALUES (3, 2, 2);
+INSERT INTO Klient_Rachunek VALUES (4, 2, 3);
+INSERT INTO Klient_Rachunek VALUES (5, 3, 4);
+INSERT INTO Klient_Rachunek VALUES (6, 3, 4);
+INSERT INTO Klient_Rachunek VALUES (7, 4, 4);
+INSERT INTO Klient_Rachunek VALUES (8, 5, 5);
+INSERT INTO Klient_Rachunek VALUES (9, 5, 4);
+INSERT INTO Klient_Rachunek VALUES (10, 6, 6);
+INSERT INTO Klient_Rachunek VALUES (11, 6, 17);
+INSERT INTO Klient_Rachunek VALUES (12, 7, 7);
+INSERT INTO Klient_Rachunek VALUES (13, 7, 16);
+INSERT INTO Klient_Rachunek VALUES (14, 8, 8);
+INSERT INTO Klient_Rachunek VALUES (15, 8, 15);
+INSERT INTO Klient_Rachunek VALUES (16, 9, 9);
+INSERT INTO Klient_Rachunek VALUES (17, 9, 14);
+INSERT INTO Klient_Rachunek VALUES (18, 10, 10);
+INSERT INTO Klient_Rachunek VALUES (19, 10, 13);
+INSERT INTO Klient_Rachunek VALUES (20, 10, 20);
+INSERT INTO Klient_Rachunek VALUES (21, 11, 11);
+INSERT INTO Klient_Rachunek VALUES (22, 11, 12);
+INSERT INTO Klient_Rachunek VALUES (23, 11, 18);
+INSERT INTO Klient_Rachunek VALUES (24, 11, 19);
+
+-- Table: Karta
+INSERT INTO Karta VALUES (1, 1696543154549695, NULL, 0.00, 'Y', 'Y', TO_DATE('01/February/2020'), 'N', 'KPL', 1);
+INSERT INTO Karta VALUES (2, 8956419653496555, NULL, 0.00, 'Y', 'Y', TO_DATE('01/February/2021'), 'N', 'KPL', 2);
+INSERT INTO Karta VALUES (3, 9865416541654965, NULL, 0.00, 'Y', 'N', TO_DATE('01/March/2019'), 'N', 'KPL', 3);
+INSERT INTO Karta VALUES (4, 8675415324159649, NULL, 0.00, 'N', 'Y', TO_DATE('01/September/2020'), 'N', 'KPL', 4);
+INSERT INTO Karta VALUES (5, 8564987495241065, NULL, 0.00, 'Y', 'Y', TO_DATE('01/January/2020'), 'N', 'KPL', 5);
+INSERT INTO Karta VALUES (6, 1956123089456162, NULL, 0.00, 'Y', 'Y', TO_DATE('01/June/2021'), 'N', 'KPL', 6);
+INSERT INTO Karta VALUES (7, 7095641603165419, NULL, 0.00, 'Y', 'Y', TO_DATE('01/February/2019'), 'N', 'KPL', 7);
+INSERT INTO Karta VALUES (8, 8416521652985462, NULL, 0.00, 'N', 'N', TO_DATE('01/June/2020'), 'N', 'KPL', 8);
+INSERT INTO Karta VALUES (9, 8564102316541623, NULL, 0.00, 'Y', 'Y', TO_DATE('01/February/2021'), 'N', 'KPL', 9);
+INSERT INTO Karta VALUES (10, 8954129845456423, NULL, 0.00, 'Y', 'Y', TO_DATE('01/June/2020'), 'N', 'KPL', 10);
+INSERT INTO Karta VALUES (11, 9854163248965416, NULL, 0.00, 'Y', 'Y', TO_DATE('01/September/2021'), 'N', 'KPL', 11);
+INSERT INTO Karta VALUES (12, 3219867456231654, NULL, 0.00, 'Y', 'N', TO_DATE('01/June/2020'), 'N', 'KPL', 12);
+INSERT INTO Karta VALUES (13, 1956421896541632, NULL, 0.00, 'N', 'Y', TO_DATE('01/August/2019'), 'N', 'KPL', 13);
+INSERT INTO Karta VALUES (14, 8945234895465433, NULL, 0.00, 'Y', 'Y', TO_DATE('01/December/2021'), 'N', 'KPL', 14);
+INSERT INTO Karta VALUES (15, 2985421965416549, NULL, 0.00, 'Y', 'Y', TO_DATE('01/September/2022'), 'N', 'KPL', 15);
+INSERT INTO Karta VALUES (16, 5372465324195649, NULL, 0.00, 'Y', 'Y', TO_DATE('01/June/2021'), 'N', 'KPL', 16);
+INSERT INTO Karta VALUES (17, 2965742632491056, NULL, 0.00, 'Y', 'Y', TO_DATE('01/October/2020'), 'N', 'KPL', 17);
+INSERT INTO Karta VALUES (18, 9485641065469840, NULL, 0.00, 'Y', 'N', TO_DATE('01/June/2020'), 'N', 'KPL', 18);
+INSERT INTO Karta VALUES (19, 9876451609856423, NULL, 0.00, 'Y', 'Y', TO_DATE('01/June/2021'), 'N', 'KPL', 19);
+INSERT INTO Karta VALUES (20, 9865406541650654, NULL, 0.00, 'Y', 'Y', TO_DATE('01/November/2019'), 'N', 'KPL', 20);
+INSERT INTO Karta VALUES (21, 8954095641906564, NULL, 0.00, 'Y', 'Y', TO_DATE('01/December/2019'), 'N', 'KPL', 21);
+INSERT INTO Karta VALUES (22, 9564109564985641, NULL, 0.00, 'Y', 'Y', TO_DATE('01/September/2020'), 'N', 'KPL', 22);
+INSERT INTO Karta VALUES (23, 5740561654235906, NULL, 0.00, 'N', 'Y', TO_DATE('01/June/2021'), 'N', 'KPL', 23);
+INSERT INTO Karta VALUES (24, 8564019564105616, NULL, 0.00, 'Y', 'Y', TO_DATE('01/February/2020'), 'N', 'KPL', 24);
+INSERT INTO Karta VALUES (25, 8564019564105616, NULL, 5000.00, 'Y', 'Y', TO_DATE('01/June/2020'), 'N', 'KKR', 24);
+INSERT INTO Karta VALUES (26, 8564019564105616, NULL, 10000.00, 'Y', 'Y', TO_DATE('01/February/2019'), 'N', 'KKR', 24);
+INSERT INTO Karta VALUES (27, 8564019564105616, NULL, 20000.00, 'Y', 'Y', TO_DATE('01/September/2021'), 'N', 'KKR', 24);
+INSERT INTO Karta VALUES (28, 8564019564105616, NULL, 10000.00, 'Y', 'Y', TO_DATE('01/December/2020'), 'N', 'KKR', 24);
+INSERT INTO Karta VALUES (29, 8564019564105616, NULL, 50000.00, 'Y', 'Y', TO_DATE('01/February/2021'), 'N', 'KKR', 24);
+INSERT INTO Karta VALUES (30, 8564019564105616, NULL, 250000.00, 'Y', 'Y', TO_DATE('01/November/2019'), 'Y', 'KPL', 24);
 
 -- Table: Rachunek_Operacja
 INSERT INTO Rachunek_Operacja VALUES (1, 1, 1, 1, 'WYC', 'ZAK', 1, 1);
@@ -694,19 +711,6 @@ INSERT INTO Rachunek_Operacja VALUES (204, 1, 15, 180, 'PMR', NULL, 8, NULL);
 INSERT INTO Rachunek_Operacja VALUES (205, 1, 1, 181, 'PMR', NULL, 2, NULL);
 INSERT INTO Rachunek_Operacja VALUES (206, 1, 2, 181, 'PMR', NULL, 2, NULL);
 
--- Table: RodzajOperacjiDict
-INSERT INTO RodzajOperacjiDict VALUES ('WYC', 'Przelew wychodzący');
-INSERT INTO RodzajOperacjiDict VALUES ('PRZ', 'Przelew przychodzący');
-INSERT INTO RodzajOperacjiDict VALUES ('PMR', 'Przelew między rachunkami');
-
--- Table: StanCywilnyDict
-INSERT INTO StanCywilnyDict VALUES ('WOL', 'Panna/kawaler');
-INSERT INTO StanCywilnyDict VALUES ('ZMW', 'W związku małżeńskim - wspólnota majątkowa');
-INSERT INTO StanCywilnyDict VALUES ('ZMR', 'W związku małżeńskim - rozdzielność majątkowa');
-INSERT INTO StanCywilnyDict VALUES ('SEP', 'Separacja');
-INSERT INTO StanCywilnyDict VALUES ('WDO', 'Wdowa/wdowiec');
-INSERT INTO StanCywilnyDict VALUES ('ROZ', 'Rozwodnik/Rozwiedziony');
-
 -- Table: Telefon
 INSERT INTO Telefon VALUES (1, '123456789', 'Y', 1);
 INSERT INTO Telefon VALUES (2, '489461658', 'Y', 2);
@@ -723,10 +727,6 @@ INSERT INTO Telefon VALUES (12, '895623165', 'N', 2);
 INSERT INTO Telefon VALUES (13, '219845626', 'N', 3);
 INSERT INTO Telefon VALUES (14, '946421655', 'N', 4);
 INSERT INTO Telefon VALUES (15, '984231065', 'N', 4);
-
--- Table: Urzad_skarbowy
-INSERT INTO Urzad_skarbowy VALUES (1, 'Warszawski US', 6);
-INSERT INTO Urzad_skarbowy VALUES (2, 'Polski US', 7);
 
 -- End of file.
 
