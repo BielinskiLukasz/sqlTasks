@@ -1,0 +1,143 @@
+ALTER
+SESSION
+SET
+NLS_DATE_FORMAT
+=
+'YYYY-MM-DD';
+
+DROP TABLE Ocena;
+DROP TABLE Student;
+DROP TABLE Przedmiot;
+DROP TABLE Osoba;
+
+CREATE TABLE Student
+(
+  Nr_indeksu  NUMBER(10) NOT NULL ,
+  Imie        VARCHAR2(20),
+  Nazwisko    VARCHAR2(20),
+  Rok         NUMBER(2),
+  CONSTRAINT Student_pk PRIMARY KEY (Nr_indeksu)
+);
+
+INSERT INTO Student
+VALUES
+(1, 'SMITH', 'CLERK', 1);
+INSERT INTO Student
+VALUES
+(2, 'ALLEN', 'SALESMAN', 1);
+INSERT INTO Student
+VALUES
+(3, 'WARD', 'SALESMAN', 2);
+INSERT INTO Student
+VALUES
+(4, 'JONES', 'MANAGER', 2);
+INSERT INTO Student
+VALUES
+(5, 'MARTIN', 'SALESMAN', 3);
+INSERT INTO Student
+VALUES
+(6, 'BLAKE', 'MANAGER', 3);
+INSERT INTO Student
+VALUES
+(7, 'CLARK', 'MANAGER', 4);
+INSERT INTO Student
+VALUES
+(8, 'SCOTT', 'ANALYST', 4);
+INSERT INTO Student
+VALUES
+(9, 'KING', 'PRESIDENT', NULL);
+INSERT INTO Student
+VALUES
+(10, 'TURNER', 'SALESMAN', 1);
+INSERT INTO Student
+VALUES
+(11, 'ADAMS', 'CLERK', 2);
+INSERT INTO Student
+VALUES
+(12, 'JAMES', 'CLERK', 2);
+INSERT INTO Student
+VALUES
+(13, 'FORD', 'ANALYST', 3);
+INSERT INTO Student
+VALUES
+(14, 'MILLER', 'CLERK', 4);
+
+CREATE TABLE Ocena
+(
+  Skrot       VARCHAR2(3) NOT NULL,
+  Nr_indeksu  NUMBER(10) NOT NULL,
+  Data        DATE,
+  Ocena       VARCHAR2(3),
+  CONSTRAINT Ocena_pk PRIMARY KEY (Skrot, Nr_indeksu)
+);
+
+INSERT INTO Ocena
+VALUES ('RBD', 1,  TO_DATE('2012-12-17'), '3.0');
+INSERT INTO Ocena
+VALUES ('PJC', 1,  TO_DATE('2012-12-17'), '3.5');
+INSERT INTO Ocena
+VALUES ('RBD', 2,  TO_DATE('2012-12-17'), '4.0');
+INSERT INTO Ocena
+VALUES ('RBD', 3,  TO_DATE('2013-12-17'), '4.5');
+INSERT INTO Ocena
+VALUES ('PJC', 4,  TO_DATE('1981-12-17'), '5.0');
+INSERT INTO Ocena
+VALUES ('RBD', 5,  TO_DATE('1989-12-17'), '3.5');
+INSERT INTO Ocena
+VALUES ('PJC', 6,  TO_DATE('1981-12-17'), '5.0');
+INSERT INTO Ocena
+VALUES ('RBD', 6,  TO_DATE('1987-12-17'), '3.5');
+INSERT INTO Ocena
+VALUES ('PJC', 7,  TO_DATE('1986-12-17'), '4.0');
+INSERT INTO Ocena
+VALUES ('RBD', 8,  TO_DATE('1984-12-17'), '3.0');
+INSERT INTO Ocena
+VALUES ('PJC', 8,  TO_DATE('1988-12-17'), '3.5');
+INSERT INTO Ocena
+VALUES ('PJC', 9,  TO_DATE('1988-12-17'), '2.0');
+INSERT INTO Ocena
+VALUES ('RBD', 9,  TO_DATE('1988-12-17'), '2.0');
+INSERT INTO Ocena
+VALUES ('PJC', 10,  TO_DATE('1988-12-17'), '2.0');
+INSERT INTO Ocena
+VALUES ('RBD', 10,  TO_DATE('1988-12-17'), '2.0');
+
+
+CREATE TABLE Przedmiot
+(
+  Skrot   VARCHAR2(3) NOT NULL,
+  Nazwa   VARCHAR2(20),
+  CONSTRAINT Przedmiot_pk PRIMARY KEY (Skrot)
+);
+
+INSERT INTO Przedmiot
+VALUES ('PJC', 'Tomaszew v2');
+INSERT INTO Przedmiot
+VALUES ('RBD', 'Gago tysiąca grup');
+INSERT INTO Przedmiot
+VALUES ('TAK', 'YELLOW');
+
+CREATE TABLE Osoba
+(
+  Nr_indeksu      NUMBER(10),
+  Imie            VARCHAR2(20),
+  Nazwisko        VARCHAR2(20),
+  Data_urodzenia  DATE
+);
+
+INSERT INTO Osoba
+VALUES (100, 'Jan', 'Kowalski', TO_DATE('1999-12-17'));
+INSERT INTO Osoba
+VALUES (101, 'Ola', 'Nowak', TO_DATE('2006-12-17'));
+INSERT INTO Osoba
+VALUES (102, 'Daniel', 'Król', TO_DATE('2005-12-17'));
+INSERT INTO Osoba
+VALUES (103, 'Stefan', 'Batory', TO_DATE('1655-12-17'));
+
+ALTER TABLE Ocena ADD CONSTRAINT Ocena_Student
+    FOREIGN KEY (Nr_indeksu)
+    REFERENCES Student (Nr_indeksu);
+
+ALTER TABLE Ocena ADD CONSTRAINT Ocena_Przedmiot
+    FOREIGN KEY (Skrot)
+    REFERENCES Przedmiot (Skrot);
