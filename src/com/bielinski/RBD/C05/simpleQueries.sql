@@ -13,27 +13,27 @@ SELECT e.ename, e.sal
 FROM emp e;
 
 -- 4.	Wylicz roczną pensję podstawową dla każdego pracownika gdyby każdemu dać podwyżkę o 250.
-SELECT e.ename, e.sal + 250 AS 'salary'
+SELECT e.ename, e.sal + 250 AS salary
 FROM emp e;
 
 -- 5.	Wybrane wyrażenie SAL*12 zaetykietuj nagłówkiem ROCZNA.
-SELECT e.ename, e.sal * 12 AS 'year'
+SELECT e.ename, e.sal * 12 AS year
 FROM emp e;
 
 -- 6.	Wybrane wyrażenie SAL*12 zaetykietuj nagłówkiem R PENSJA.
-SELECT e.ename, e.sal * 12 AS 'year salary'
+SELECT e.ename, e.sal * 12 AS "year salary"
 FROM emp e;
 
 -- 7.	Połącz EMPNO i nazwisko, opatrz je nagłówkiem EMPLOYEE.
-SELECT e.empno || ' ' || e.ename AS 'employee'
+SELECT e.empno || ' ' || e.ename AS "employee"
 FROM emp e;
 
 -- 8.	Utwórz zapytanie zwracające wynik w postaci np. „Kowalski pracuje w dziale 20”.
-SELECT e.ename || ' pracuje w dziale ' || e.deptno
+SELECT e.ename || ' pracuje w dziale ' || e.deptno AS "info"
 FROM emp e;
 
 -- 9.	Wylicz roczną pensję całkowitą dla każdego pracownika (z uwzględnieniem prowizji).
-SELECT e.ename, e.sal * 12 + NVL(e.comm, 0)
+SELECT e.ename, e.sal * 12 + NVL(e.comm, 0) AS "year salary"
 FROM emp e;
 
 -- 10.	Wyświetl wszystkie numery departamentów występujące w tabeli EMP.
@@ -124,8 +124,9 @@ WHERE e.mgr IS NOT NULL
 --      w przedziale <1000.2000).
 SELECT e.empno, e.ename, e.sal, e.job
 FROM emp e
-WHERE e.sal BETWEEN 1000 AND 2000
-  AND e.job = 'CLERK'
+WHERE e.sal >= 1000 AND
+  e.sal < 2000 AND
+  e.job = 'CLERK'
 
 -- 28.	Wybierz dane pracowników zatrudnionych na stanowisku CLERK albo takich, których zarobki SAL mieszczą się
 --      w przedziale <1000.2000).
@@ -191,7 +192,7 @@ WHERE e.hiredate BETWEEN '1980-01-01' AND '1980-12-31';
 
 -- 39.	Wybierz nazwiska, roczną pensję oraz prowizję tych wszystkich sprzedawców, których miesięczna pensja
 --      przekracza prowizję. Wyniki posortuj według malejących zarobków, potem nazwisk.
-SELECT e.ename, e.sal * 12 as 'year salary', e.comm
+SELECT e.ename, e.sal * 12 as "year salary", e.comm
 FROM emp e
 WHERE e.sal > e.comm
 ORDER BY e.sal DESC, e.ename;
