@@ -1,7 +1,7 @@
 -- SQL – podzapytania
 
 -- 1.	Znajdź pracowników z pensją równą minimalnemu zarobkowi w firmie.
-
+x
 
 -- 2.	Znajdź wszystkich pracowników zatrudnionych na tym samym stanowisku co BLAKE.
 
