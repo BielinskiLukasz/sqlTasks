@@ -194,5 +194,5 @@ WHERE e.hiredate BETWEEN '1980-01-01' AND '1980-12-31';
 --      przekracza prowizję. Wyniki posortuj według malejących zarobków, potem nazwisk.
 SELECT e.ename, e.sal * 12 as "year salary", e.comm
 FROM emp e
-WHERE e.sal > e.comm
+WHERE e.sal > NVL(e.comm, 0)
 ORDER BY e.sal DESC, e.ename;
