@@ -1,7 +1,7 @@
 -- SQL - DML, DDL, modyfikacja danych
 
 -- 1.	Utwórz tabelę „miasto” posiadającą klucz główny (np. id_miasto) oraz kolumnę „nazwa”.
-x
+
 
 -- 2.	Utwórz tabelę „osoba” posiadającą kolumny: id_osoby, nazwisko, data_urodzenia, adres oraz id_miasto, które jest
 --    kluczem obcym z tabeli miasto.
