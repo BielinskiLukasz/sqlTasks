@@ -363,6 +363,19 @@ INSERT INTO OperacjaWychodzacaDane VALUES (87, TIMESTAMP '2018-06-16 09:26:50.12
 INSERT INTO OperacjaWychodzacaDane VALUES (88, TIMESTAMP '2018-08-12 09:26:50.12', 'INT');
 INSERT INTO OperacjaWychodzacaDane VALUES (89, TIMESTAMP '2018-10-08 09:26:50.12', 'INT');
 INSERT INTO OperacjaWychodzacaDane VALUES (90, TIMESTAMP '2018-12-02 09:26:50.12', 'INT');
+INSERT INTO OperacjaWychodzacaDane VALUES (91, TIMESTAMP '2018-01-28 09:26:50.12', NULL);
+INSERT INTO OperacjaWychodzacaDane VALUES (92, TIMESTAMP '2018-02-28 09:26:50.12', NULL);
+INSERT INTO OperacjaWychodzacaDane VALUES (93, TIMESTAMP '2018-03-28 09:26:50.12', NULL);
+INSERT INTO OperacjaWychodzacaDane VALUES (94, TIMESTAMP '2018-04-28 09:26:50.12', NULL);
+INSERT INTO OperacjaWychodzacaDane VALUES (95, TIMESTAMP '2018-05-28 09:26:50.12', NULL);
+INSERT INTO OperacjaWychodzacaDane VALUES (96, TIMESTAMP '2018-06-28 09:26:50.12', NULL);
+INSERT INTO OperacjaWychodzacaDane VALUES (97, TIMESTAMP '2018-07-28 09:26:50.12', NULL);
+INSERT INTO OperacjaWychodzacaDane VALUES (98, TIMESTAMP '2018-08-28 09:26:50.12', NULL);
+INSERT INTO OperacjaWychodzacaDane VALUES (99, TIMESTAMP '2018-09-28 09:26:50.12', NULL);
+INSERT INTO OperacjaWychodzacaDane VALUES (100, TIMESTAMP '2018-10-28 09:26:50.12', NULL);
+INSERT INTO OperacjaWychodzacaDane VALUES (101, TIMESTAMP '2018-11-28 09:26:50.12', NULL);
+INSERT INTO OperacjaWychodzacaDane VALUES (102, TIMESTAMP '2018-12-28 09:26:50.12', NULL);
+INSERT INTO OperacjaWychodzacaDane VALUES (103, TIMESTAMP '2018-11-29 09:26:50.12', NULL);
 
 -- Table: RachunekDict
 INSERT INTO RachunekDict VALUES ('RIN', 'Rachunek internetowy');
@@ -417,7 +430,7 @@ INSERT INTO Klient VALUES (6, 'Karina', 'Cyryla', 'Węgierska', 95011058332, 'Fi
 INSERT INTO Klient VALUES (7, 'Marta', 'Anna', 'Kluska', 96070822458, 'Andrzej', 'Monika', 'Ptak', TO_DATE('1996-06-08'), 'Otwock', NULL, 'Y', 'POL', 'WOL', 7 , 1, 12, 12, 12);
 INSERT INTO Klient VALUES (8, 'Lidia', 'Maria', 'Bąk', 6211042745, 'Karol', 'Klaudia', 'Kolorowa', TO_DATE('1962-11-04'), 'Puławy', NULL, 'Y', 'POL', 'SEP', 8 , 1, 13, 13, 13);
 INSERT INTO Klient VALUES (9, 'Magda', 'Rebeka', 'Cicha', 89120400125, 'Marcin', 'Daria', 'Mróz', TO_DATE('1989-12-04'), 'Paryż', NULL, 'Y', 'POL', 'WOL', 9 , 2, 14, 14, 14);
-INSERT INTO Klient VALUES (10, 'Krystian', 'Piotr', 'Mądry', 75030514236, 'Piotr', 'Marta', 'Ulicka', TO_DATE('1975-03-05'), 'Warszawa', NULL, 'Y', 'ENG', 'WDO', 10 , 2, 7, 7, 7);
+INSERT INTO Klient VALUES (10, 'Krystian', 'Piotr', 'Mądry', 75030514236, 'Piotr', 'Marta', 'Ulicka', TO_DATE('1975-03-05'), 'Warszawa', NULL, 'Y', 'ENG', 'WDO', 10 , 2, 7, 8, 9);
 INSERT INTO Klient VALUES (11, 'Łukasz', 'Paweł', 'Nowak', 92111907850, 'Tomasz', 'Ewa', 'Filipska', TO_DATE('1992-11-19'), 'Moskwa', NULL, 'Y', 'USA', 'WOL', 11 , 2, 9, 9, 9);
 
 -- Table: Email
@@ -438,13 +451,13 @@ INSERT INTO Email VALUES (14, 'koszary@com.pl', 'N', 5);
 
 -- Table: Klient_Lokata
 INSERT INTO Klient_Lokata VALUES (1, 1000.00, 18, TO_DATE('2018-01-11'), 1, 1);
-INSERT INTO Klient_Lokata VALUES (2, 2000.00, 36, TO_DATE('2018-02-19'), 1, 1);
-INSERT INTO Klient_Lokata VALUES (3, 5000.00, 12, TO_DATE('2018-03-13'), 1, 2);
-INSERT INTO Klient_Lokata VALUES (4, 10000.00, 48, TO_DATE('2018-05-17'), 1, 2);
-INSERT INTO Klient_Lokata VALUES (5, 20000.00, 15, TO_DATE('2018-06-15'), 1, 3);
-INSERT INTO Klient_Lokata VALUES (6, 50000.00, 19, TO_DATE('2018-11-25'), 1, 3);
-INSERT INTO Klient_Lokata VALUES (7, 100000.00, 17, TO_DATE('2018-09-05'), 1, 4);
-INSERT INTO Klient_Lokata VALUES (8, 200000.00, 25, TO_DATE('2018-12-30'), 1, 4);
+INSERT INTO Klient_Lokata VALUES (2, 2000.00, 36, TO_DATE('2018-02-19'), 3, 1);
+INSERT INTO Klient_Lokata VALUES (3, 5000.00, 12, TO_DATE('2018-03-13'), 5, 2);
+INSERT INTO Klient_Lokata VALUES (4, 10000.00, 48, TO_DATE('2018-05-17'), 7, 2);
+INSERT INTO Klient_Lokata VALUES (5, 20000.00, 15, TO_DATE('2018-06-15'), 9, 3);
+INSERT INTO Klient_Lokata VALUES (6, 50000.00, 19, TO_DATE('2018-11-25'), 11, 3);
+INSERT INTO Klient_Lokata VALUES (7, 100000.00, 17, TO_DATE('2018-09-05'), 10, 4);
+INSERT INTO Klient_Lokata VALUES (8, 200000.00, 25, TO_DATE('2018-12-30'), 2, 4);
 
 -- Table: Klient_Rachunek
 INSERT INTO Klient_Rachunek VALUES (1, 1, 1);
@@ -686,31 +699,31 @@ INSERT INTO Rachunek_Operacja VALUES (178, 1, 6, 166, 'PRZ', 'OPR', NULL, NULL);
 INSERT INTO Rachunek_Operacja VALUES (179, 1, 7, 167, 'PRZ', 'OPR', NULL, NULL);
 INSERT INTO Rachunek_Operacja VALUES (180, 1, 8, 168, 'PRZ', 'OPR', NULL, NULL);
 INSERT INTO Rachunek_Operacja VALUES (181, 1, 9, 169, 'PMR', NULL, 9, NULL);
-INSERT INTO Rachunek_Operacja VALUES (182, 1, 14, 169, 'PMR', NULL, 9, NULL);
-INSERT INTO Rachunek_Operacja VALUES (183, 1, 10, 170, 'PMR', NULL, 10, NULL);
+INSERT INTO Rachunek_Operacja VALUES (182, 1, 14, 169, 'PMR', NULL, 9, 91);
+INSERT INTO Rachunek_Operacja VALUES (183, 1, 10, 170, 'PMR', NULL, 10, 92);
 INSERT INTO Rachunek_Operacja VALUES (184, 1, 13, 170, 'PMR', NULL, 10, NULL);
 INSERT INTO Rachunek_Operacja VALUES (185, 1, 10, 171, 'PMR', NULL, 10, NULL);
-INSERT INTO Rachunek_Operacja VALUES (186, 1, 20, 171, 'PMR', NULL, 10, NULL);
-INSERT INTO Rachunek_Operacja VALUES (187, 1, 11, 172, 'PMR', NULL, 11, NULL);
+INSERT INTO Rachunek_Operacja VALUES (186, 1, 20, 171, 'PMR', NULL, 10, 93);
+INSERT INTO Rachunek_Operacja VALUES (187, 1, 11, 172, 'PMR', NULL, 11, 94);
 INSERT INTO Rachunek_Operacja VALUES (188, 1, 12, 172, 'PMR', NULL, 11, NULL);
 INSERT INTO Rachunek_Operacja VALUES (189, 1, 12, 173, 'PMR', NULL, 11, NULL);
-INSERT INTO Rachunek_Operacja VALUES (190, 1, 18, 173, 'PMR', NULL, 11, NULL);
-INSERT INTO Rachunek_Operacja VALUES (191, 1, 18, 174, 'PMR', NULL, 11, NULL);
+INSERT INTO Rachunek_Operacja VALUES (190, 1, 18, 173, 'PMR', NULL, 11, 95);
+INSERT INTO Rachunek_Operacja VALUES (191, 1, 18, 174, 'PMR', NULL, 11, 96);
 INSERT INTO Rachunek_Operacja VALUES (192, 1, 19, 174, 'PMR', NULL, 11, NULL);
 INSERT INTO Rachunek_Operacja VALUES (193, 1, 1, 175, 'PMR', NULL, 1, NULL);
-INSERT INTO Rachunek_Operacja VALUES (194, 1, 2, 175, 'PMR', NULL, 1, NULL);
-INSERT INTO Rachunek_Operacja VALUES (195, 1, 3, 176, 'PMR', NULL, 3, NULL);
+INSERT INTO Rachunek_Operacja VALUES (194, 1, 2, 175, 'PMR', NULL, 1, 97);
+INSERT INTO Rachunek_Operacja VALUES (195, 1, 3, 176, 'PMR', NULL, 3, 98);
 INSERT INTO Rachunek_Operacja VALUES (196, 1, 4, 176, 'PMR', NULL, 3, NULL);
 INSERT INTO Rachunek_Operacja VALUES (197, 1, 4, 177, 'PMR', NULL, 5, NULL);
-INSERT INTO Rachunek_Operacja VALUES (198, 1, 5, 177, 'PMR', NULL, 5, NULL);
-INSERT INTO Rachunek_Operacja VALUES (199, 1, 6, 178, 'PMR', NULL, 6, NULL);
+INSERT INTO Rachunek_Operacja VALUES (198, 1, 5, 177, 'PMR', NULL, 5, 99);
+INSERT INTO Rachunek_Operacja VALUES (199, 1, 6, 178, 'PMR', NULL, 6, 100);
 INSERT INTO Rachunek_Operacja VALUES (200, 1, 17, 178, 'PMR', NULL, 6, NULL);
 INSERT INTO Rachunek_Operacja VALUES (201, 1, 7, 179, 'PMR', NULL, 7, NULL);
-INSERT INTO Rachunek_Operacja VALUES (202, 1, 16, 179, 'PMR', NULL, 7, NULL);
-INSERT INTO Rachunek_Operacja VALUES (203, 1, 8, 180, 'PMR', NULL, 8, NULL);
+INSERT INTO Rachunek_Operacja VALUES (202, 1, 16, 179, 'PMR', NULL, 7, 101);
+INSERT INTO Rachunek_Operacja VALUES (203, 1, 8, 180, 'PMR', NULL, 8, 102);
 INSERT INTO Rachunek_Operacja VALUES (204, 1, 15, 180, 'PMR', NULL, 8, NULL);
 INSERT INTO Rachunek_Operacja VALUES (205, 1, 1, 181, 'PMR', NULL, 2, NULL);
-INSERT INTO Rachunek_Operacja VALUES (206, 1, 2, 181, 'PMR', NULL, 2, NULL);
+INSERT INTO Rachunek_Operacja VALUES (206, 1, 2, 181, 'PMR', NULL, 2, 103);
 
 -- Table: Telefon
 INSERT INTO Telefon VALUES (1, '123456789', 'Y', 1);

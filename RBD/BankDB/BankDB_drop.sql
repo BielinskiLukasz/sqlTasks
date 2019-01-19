@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2019-01-08 23:42:42.697
+-- Last modification date: 2019-01-19 16:38:14.436
 
 -- foreign keys
 ALTER TABLE BankDict

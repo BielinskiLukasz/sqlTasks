@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2019-01-08 23:42:42.697
+-- Last modification date: 2019-01-19 16:38:14.436
 
 -- tables
 -- Table: Adres
@@ -162,7 +162,7 @@ CREATE TABLE Operacja (
 CREATE TABLE OperacjaWychodzacaDane (
     IdOperacjaWychodzacaDane integer  NOT NULL,
     CzasZlecenia timestamp  NOT NULL,
-    PlatnoscDict_Key varchar2(3)  NOT NULL,
+    PlatnoscDict_Key varchar2(3)  NULL,
     CONSTRAINT OperacjaWychodzacaDane_pk PRIMARY KEY (IdOperacjaWychodzacaDane)
 ) ;
 
