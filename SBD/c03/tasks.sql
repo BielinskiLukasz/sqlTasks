@@ -3,7 +3,9 @@
 -- wynagrodzenie o 10%. Wypisz na ekran każdą wprowadzoną zmianę.
 
 DECLARE change_salary CURSOR FOR SELECT ename, empno, sal
-                                 FROM emp;
+                                 FROM emp
+                                 WHERE sal > 1500
+                                    OR sal < 1000;
 DECLARE
   @ename Varchar(15), @empno Int, @sal Money;
 OPEN change_salary
@@ -36,7 +38,9 @@ CREATE PROCEDURE change_specific_salary @salary_to_rise int, @salary_to_cut int
 AS
 BEGIN
   DECLARE change_salary CURSOR FOR SELECT ename, empno, sal
-                                   FROM emp;
+                                   FROM emp
+                                   WHERE sal > 1500
+                                      OR sal < 1000;
   DECLARE
     @ename Varchar(15), @empno Int, @sal Money;
   OPEN change_salary
