@@ -19,7 +19,7 @@ BEGIN
       PRINT @ename + ' zarabia po obniżce '
         + Cast(@sal As Varchar);
     END;
-  IF @sal < 1000
+  ELSE
     BEGIN
       SET @sal = @sal * 1.1;
       UPDATE emp SET sal = @sal WHERE empno = @empno;
@@ -39,8 +39,8 @@ AS
 BEGIN
   DECLARE change_salary CURSOR FOR SELECT ename, empno, sal
                                    FROM emp
-                                   WHERE sal > 1500
-                                      OR sal < 1000;
+                                   WHERE sal > @salary_to_cut
+                                      OR sal < @salary_to_rise;
   DECLARE
     @ename Varchar(15), @empno Int, @sal Money;
   OPEN change_salary
@@ -55,13 +55,12 @@ BEGIN
           + Cast(@sal As Varchar);
       END;
     ELSE
-      IF @sal < @salary_to_rise
-        BEGIN
-          SET @sal = @sal * 1.1;
-          UPDATE emp SET sal = @sal WHERE empno = @empno;
-          PRINT @ename + ' zarabia po podwyżce '
-            + Cast(@sal As Varchar);
-        END;
+      BEGIN
+        SET @sal = @sal * 1.1;
+        UPDATE emp SET sal = @sal WHERE empno = @empno;
+        PRINT @ename + ' zarabia po podwyżce '
+          + Cast(@sal As Varchar);
+      END;
     FETCH NEXT FROM change_salary INTO @ename, @empno, @sal;
   END;
   CLOSE change_salary;
