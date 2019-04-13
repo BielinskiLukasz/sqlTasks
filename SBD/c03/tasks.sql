@@ -105,3 +105,88 @@ END;
 GO
 
 EXEC give_common 10;
+
+-- Zad4
+-- (bez kursora) Utwórz tabelę Magazyn (IdPozycji, Nazwa, Ilosc) zawierającą ilości poszczególnych towarów w magazynie 
+-- i wstaw do niej kilka przykładowych rekordów. W bloku Transact-SQL sprawdź, którego artykułu jest najwięcej w 
+-- magazynie i zmniejsz ilość tego artykułu o 5 (jeśli stan jest większy lub równy 5, w przeciwnym wypadku zgłoś błąd).
+CREATE TABLE Magazyn
+(
+    IdPozycji integer     NOT NULL,
+    Nazwa     varchar(50) NOT NULL,
+    Ilosc     float(10)   NOT NULL,
+    CONSTRAINT Magazyn_pk PRIMARY KEY (IdPozycji)
+);
+
+INSERT INTO Magazyn
+VALUES (1, 'Sample1', 10);
+INSERT INTO Magazyn
+VALUES (2, 'Sample2', 1);
+INSERT INTO Magazyn
+VALUES (3, 'Sample3', 9);
+INSERT INTO Magazyn
+VALUES (4, 'Sample4', 2);
+INSERT INTO Magazyn
+VALUES (5, 'Sample5', 8);
+INSERT INTO Magazyn
+VALUES (6, 'Sample6', 3);
+INSERT INTO Magazyn
+VALUES (7, 'Sample7', 7);
+INSERT INTO Magazyn
+VALUES (8, 'Sample8', 4);
+INSERT INTO Magazyn
+VALUES (9, 'Sample9', 6);
+INSERT INTO Magazyn
+VALUES (10, 'Sample10', 5);
+
+BEGIN
+    DECLARE
+        @maxIlosc Int
+    SELECT @maxIlosc = MAX(Ilosc)
+    FROM Magazyn
+
+    IF @maxIlosc < 5
+        BEGIN
+            RAISERROR ('Za mało produktów w magazynie', 1, 10)
+        END
+    ELSE
+        BEGIN
+            UPDATE Magazyn
+            SET Ilosc = @maxIlosc - 5
+            WHERE IdPozycji = (
+                SELECT MIN(IdPozycji)
+                FROM Magazyn
+                WHERE Ilosc = @maxIlosc
+            )
+        END
+END;
+
+-- Zad5
+-- Przerób kod z zadania 4 na procedurę, której będziemy mogli podać wartość, o którą zmniejszamy stan
+-- (zamiast wpisanego „na sztywno” 5).
+CREATE PROCEDURE stash_max_prod @how_many int
+AS
+BEGIN
+    DECLARE
+        @maxIlosc Int
+    SELECT @maxIlosc = MAX(Ilosc)
+    FROM Magazyn
+
+    IF @maxIlosc < @how_many
+        BEGIN
+            RAISERROR ('Za mało produktów w magazynie', 1, 10)
+        END
+    ELSE
+        BEGIN
+            UPDATE Magazyn
+            SET Ilosc = @maxIlosc - @how_many
+            WHERE IdPozycji = (
+                SELECT MIN(IdPozycji)
+                FROM Magazyn
+                WHERE Ilosc = @maxIlosc
+            )
+        END
+END;
+GO
+
+EXEC stash_max_prod 7
