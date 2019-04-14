@@ -44,9 +44,31 @@ VALUES (9998, 'SMITH', 'CLERK', 7902, CONVERT(DATETIME, '17-DEC-1980'), 800, NUL
 -- Uwaga: Ten sam efekt można uzyskać łatwiej przy pomocy więzów spójności typu CHECK. Użyjmy wyzwalacza w celach
 -- treningowych.
 
+CREATE TRIGGER payTooMuch
+    ON Emp
+    FOR Insert, Update
+    AS
+BEGIN
+    DECLARE
+        @sal DECIMAL(6, 2)
+    SELECT @sal = sal FROM inserted
+    IF @sal > 1000
+        BEGIN
+            ROLLBACK
+            RAISERROR ('Nie można płacić pracownikowi więcej niż 1000',1,2)
+        END
+END;
+
+INSERT INTO emp
+VALUES (9997, 'SMITH', 'CLERK', 7902, CONVERT(DATETIME, '17-DEC-1980'), 8000, NULL, 20);
+
+UPDATE emp
+SET sal = 2000
+WHERE job = 'SALESMAN';
 
 -- 4. Utwórz tabelę budzet:
 -- CREATE TABLE budzet (wartosc INT NOT NULL)
+
 
 
 -- 5. W tabeli tej będzie przechowywana łączna wartość wynagrodzenia wszystkich pracowników. Tabela będzie zawsze
