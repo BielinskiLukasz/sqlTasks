@@ -67,19 +67,43 @@ SET sal = 2000
 WHERE job = 'SALESMAN';
 
 -- 4. Utwórz tabelę budzet:
--- CREATE TABLE budzet (wartosc INT NOT NULL)
 
-
+CREATE TABLE budzet
+(
+    wartosc INT NOT NULL
+)
 
 -- 5. W tabeli tej będzie przechowywana łączna wartość wynagrodzenia wszystkich pracowników. Tabela będzie zawsze
 -- zawierała jeden wiersz. Należy najpierw obliczyć początkową wartość zarobków:
--- INSERT INTO budzet (wartosc)
--- SELECT SUM(sal) FROM emp
 
+INSERT INTO budzet (wartosc)
+SELECT SUM(sal)
+FROM emp;
 
 -- 6. Utwórz wyzwalacz, który będzie pilnował, aby wartość w tabeli budzet była zawsze aktualna, a więc przy wszystkich
 -- operacjach aktualizujących tabelę EMP (INSERT, UPDATE, DELETE), wyzwalacz będzie aktualizował wpis w tabeli budżet.
 
+CREATE TRIGGER updateBudget
+    ON Emp
+    FOR Insert, Update, Delete
+    AS
+BEGIN
+    UPDATE budzet
+    SET wartosc = (
+        SELECT SUM(sal)
+        FROM emp)
+END;
+
+INSERT INTO emp
+VALUES (9996, 'SMITH', 'CLERK', 7902, CONVERT(DATETIME, '17-DEC-1980'), 800, NULL, 20);
+
+UPDATE emp
+SET sal = 600
+WHERE job = 'SALESMAN';
+
+DELETE
+FROM emp
+WHERE empno = 9996;
 
 -- 7. Napisz wyzwalacz, który nie pozwoli modyfikować nazw działów w tabeli DEPT. Powinno być jednak możliwe wstawianie
 -- nowych działów.
