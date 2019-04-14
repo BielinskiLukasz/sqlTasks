@@ -108,4 +108,24 @@ WHERE empno = 9996;
 -- 7. Napisz wyzwalacz, który nie pozwoli modyfikować nazw działów w tabeli DEPT. Powinno być jednak możliwe wstawianie
 -- nowych działów.
 
+CREATE TRIGGER saveDeptName
+    ON Dept
+    FOR Update
+    AS
+BEGIN
+    DECLARE
+        @dname VARCHAR(14)
+    SELECT @dname = dname FROM inserted
+    IF @dname IS NOT NULL
+        BEGIN
+            ROLLBACK
+            RAISERROR ('Nie można zmieniać nazw działów',1,2)
+        END
+END;
 
+INSERT INTO dept
+VALUES (50, 'x', 'y');
+
+UPDATE dept
+SET dname = 'z'
+WHERE dname = 'x';
