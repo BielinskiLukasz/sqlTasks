@@ -1,5 +1,6 @@
 -- 1. Utwórz wyzwalacz, który nie pozwoli usunąć rekordu z tabeli EMP.
-CREATE TRIGGER wyzw
+
+CREATE TRIGGER cannotDelete
     ON Emp
     FOR DELETE
     AS
@@ -17,6 +18,25 @@ WHERE job = 'SALESMAN';
 -- Uwaga: Zadanie da się wykonać bez użycia wyzwalaczy przy pomocy DEFAULT. Użyjmy jednak wyzwalacza w celach
 -- treningowych.
 
+CREATE TRIGGER insertEmptyComm
+    ON Emp
+    FOR Insert
+    AS
+BEGIN
+    DECLARE
+        @comm DECIMAL(6, 2), @empno INT
+    SELECT @comm = comm FROM inserted
+    SELECT @empno = empno FROM inserted
+    IF @comm IS NULL
+        BEGIN
+            UPDATE emp
+            SET comm = 0
+            WHERE empno = @empno
+        END
+END;
+
+INSERT INTO emp
+VALUES (9998, 'SMITH', 'CLERK', 7902, CONVERT(DATETIME, '17-DEC-1980'), 800, NULL, 20);
 
 -- 3. Utwórz wyzwalacz, który przy wstawianiu lub modyfikowaniu danych w tabeli EMP sprawdzi czy nowe zarobki
 -- (wstawiane lub modyfikowane) są większe niż 1000. W przeciwnym przypadku wyzwalacz powinien zgłosić błąd i nie
