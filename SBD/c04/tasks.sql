@@ -88,10 +88,11 @@ CREATE TRIGGER updateBudget
     FOR Insert, Update, Delete
     AS
 BEGIN
-    UPDATE budzet
-    SET wartosc = (
-        SELECT SUM(sal)
-        FROM emp)
+    DECLARE
+        @zmniejsz INT, @zwieksz INT
+    SELECT @zmniejsz = SUM(sal) FROM deleted
+    SELECT @zwieksz = SUM(sal) FROM inserted
+    UPDATE budzet SET wartosc = wartosc - ISNULL(@zmniejsz, 0) + ISNULL(@zwieksz, 0)
 END;
 
 INSERT INTO emp
