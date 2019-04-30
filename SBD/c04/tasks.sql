@@ -130,3 +130,94 @@ VALUES (50, 'x', 'y');
 UPDATE dept
 SET dname = 'z'
 WHERE dname = 'x';
+
+-- 8. Napisz jeden wyzwalacz, który:
+-- ➢ Nie pozwoli usunąć pracownika, którego pensja jest większa od 0.
+-- ➢ Nie pozwoli zmienić nazwiska pracownika.
+-- ➢ Nie pozwoli wstawić pracownika, który już istnieje (sprawdzając po nazwisku).
+
+CREATE TRIGGER cannotSomeActions
+    ON Emp
+    FOR Insert, Update, Delete
+    AS
+BEGIN
+    DECLARE
+        @sal          DECIMAL(6, 2),
+        @ename        VARCHAR(10),
+        @deletedEname VARCHAR(10)
+    SELECT @sal = sal FROM deleted
+    SELECT @ename = ename FROM inserted
+    SELECT @deletedEname = ename FROM deleted
+    IF @deletedEname IS NULL AND @ename IN (
+        SELECT ename
+        FROM emp)
+        BEGIN
+            ROLLBACK
+            RAISERROR ('Istnieje już pracownik o takim nazwisku',1,2)
+        END
+    ELSE
+        IF @ename IS NOT NULL AND @deletedEname IS NOT NULL AND @ename != @deletedEname
+            BEGIN
+                ROLLBACK
+                RAISERROR ('Nie można zmieniać nazwiska pracownika',1,2)
+            END
+        ELSE
+            IF @sal > 0
+                BEGIN
+                    ROLLBACK
+                    RAISERROR ('Nie można usunąć pracownika, którego pensja jest większa od 0',1,2)
+                END
+END;
+
+INSERT INTO emp
+VALUES (9995, 'SMITH', 'CLERK', 7902, CONVERT(DATETIME, '17-DEC-1980'), 800, NULL, 20);
+
+UPDATE emp
+SET ename = 'SMITH2'
+WHERE job = 'CLERK';
+
+DELETE
+FROM emp
+WHERE empno = 9996;
+
+-- 9. Napisz wyzwalacz, który:
+-- ➢ Nie pozwoli zmniejszać pensji.
+-- ➢ Nie pozwoli usuwać pracowników.
+
+CREATE TRIGGER cannotSomeOtherActions
+    ON Emp
+    FOR Update, Delete
+    AS
+BEGIN
+    DECLARE
+        @oldSal   DECIMAL(6, 2),
+        @newSal   DECIMAL(6, 2),
+        @oldCount INT,
+        @newCount INT
+    SELECT @oldSal = sal FROM deleted
+    SELECT @newSal = sal FROM inserted
+    SELECT @oldCount = COUNT(*) from deleted
+    SELECT @newCount = COUNT(*) from inserted
+    IF @oldCount > 0 AND @newCount = 0
+        BEGIN
+            ROLLBACK
+            RAISERROR ('Nie można usuwać pracowników',1,2)
+        END
+    ELSE
+        IF @oldSal > @newSal
+            BEGIN
+                ROLLBACK
+                RAISERROR ('Nie można zmniejszać pensji',1,2)
+            END
+END;
+
+INSERT INTO emp
+VALUES (9995, 'SMITH', 'CLERK', 7902, CONVERT(DATETIME, '17-DEC-1980'), 800, NULL, 20);
+
+UPDATE emp
+SET sal = 799
+WHERE ename = 'SMITH';
+
+DELETE
+FROM emp
+WHERE empno = 9996;
