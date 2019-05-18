@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2019-05-18 09:32:35.599
+-- Last modification date: 2019-05-18 10:31:01.387
 
 -- foreign keys
 ALTER TABLE BankDict DROP CONSTRAINT BankDict_Adres;

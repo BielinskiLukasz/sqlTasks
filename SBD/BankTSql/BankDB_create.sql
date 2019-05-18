@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2019-05-18 09:32:35.599
+-- Last modification date: 2019-05-18 10:31:01.387
 
 -- tables
 -- Table: Adres
@@ -91,7 +91,7 @@ CREATE TABLE Klient (
     Imie varchar(50)  NOT NULL,
     DrugieImie varchar(50)  NULL,
     Nazwisko varchar(100)  NOT NULL,
-    NrPesel int  NULL,
+    NrPesel bigint  NULL,
     ImieOjca varchar(50)  NOT NULL,
     ImieMatki varchar(50)  NOT NULL,
     NazwiskoRodoweMatki varchar(50)  NOT NULL,
@@ -161,7 +161,7 @@ CREATE TABLE Operacja (
 -- Table: OperacjaWychodzacaDane
 CREATE TABLE OperacjaWychodzacaDane (
     IdOperacjaWychodzacaDane int  NOT NULL,
-    CzasZlecenia timestamp  NOT NULL,
+    CzasZlecenia datetime  NOT NULL,
     PlatnoscDict_Key varchar(3)  NULL,
     CONSTRAINT OperacjaWychodzacaDane_pk PRIMARY KEY  (IdOperacjaWychodzacaDane)
 );
