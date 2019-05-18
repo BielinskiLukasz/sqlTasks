@@ -55,77 +55,98 @@ EXEC check_investments;
 CREATE PROCEDURE transfer @amount float, @fromAccount bigint, @toAccount bigint, @idClient int
 AS
 BEGIN
-    -- TODO zaimplementować sprawczenie czy dany klient jest powiązany z rachunkiem wychodzącym
-    IF (SELECT StanKonta FROM Rachunek WHERE NrRachunku = @fromAccount) < @amount
-        RAISERROR ('Brak środków',1,2)
+    IF @idClient NOT IN (SELECT IdKlient
+                         FROM Klient_Rachunek
+                                  JOIN Rachunek ON Klient_Rachunek.IdRachunek = Rachunek.IdRachunek
+                         WHERE NrRachunku = @fromAccount)
+        RAISERROR ('Brak uprawnień',1,2)
     ELSE
-        BEGIN
-            DECLARE
-                @idRachunek int
-            SELECT @idRachunek = IdRachunek FROM Rachunek WHERE NrRachunku = @fromAccount;
-            -- czy drugi rachunek również w naszym banku
-            DECLARE
-                @isSecondAccountInOurDB bit, @idOperacja int, @idRachunek_Operacja int, @dziennyNrOperacji int
-            SELECT @isSecondAccountInOurDB = COUNT(*) FROM Rachunek WHERE NrRachunku = @fromAccount
-            -- operacja
-            SELECT @idOperacja = MAX(IdOperacja) FROM Operacja
-            IF (@isSecondAccountInOurDB = 0)
-                -- identyfikatorKonta dla rachunków zewnętrznych
-                BEGIN
-                    DECLARE
-                        @idIdentyfikatorKonta int
-                    SELECT @idIdentyfikatorKonta = MAX(IdIdentyfikatorKonta) FROM IdentyfikatorKonta
-                    INSERT INTO IdentyfikatorKonta VALUES (@idIdentyfikatorKonta + 1, @toAccount, 'ING', null);
-                    INSERT INTO Operacja
-                    VALUES (@idOperacja + 1, @amount, 'comment', CONVERT(DATETIME, sysdatetime()),
-                            @idIdentyfikatorKonta);
-                END
-            ELSE
-                BEGIN
-                    INSERT INTO Operacja
-                    VALUES (@idOperacja + 1, @amount, 'comment', CONVERT(DATETIME, sysdatetime()), null);
-                END
-            -- rachunek_operacja
-            SELECT @idRachunek_Operacja = MAX(IdRachunek_Operacja) FROM Rachunek_Operacja
-            SELECT @dziennyNrOperacji = MAX(DziennyNrOperacji)
-            FROM Rachunek_Operacja
-                     JOIN Operacja ON Rachunek_Operacja.IdOperacja = Operacja.IdOperacja -- założenie zerowania rekordów dziennyNrOperacji o północy
-            WHERE IdRachunek = @fromAccount
-            IF (@isSecondAccountInOurDB = 0)
-                -- operacjaWychodzącaDane dla rachunków zewnętrznych
-                BEGIN
-                    DECLARE
-                        @idOperacjaWychodzącaDane int
-                    SELECT @idOperacjaWychodzącaDane = MAX(IdOperacjaWychodzącaDane) FROM IdOperacjaWychodzącaDane
-                    INSERT INTO OperacjaWychodzacaDane
-                    VALUES (@idOperacjaWychodzącaDane + 1, CONVERT(DATETIME, sysdatetime()), null);
-                    INSERT INTO Rachunek_Operacja
-                    VALUES (@idRachunek_Operacja + 1, ISNULL(@dziennyNrOperacji, 0) + 1, @idRachunek, @idOperacja,
-                            'WYC', null,
-                            @idClient, @idOperacjaWychodzącaDane);
-                END
-            ELSE
-                BEGIN
-                    INSERT INTO Rachunek_Operacja
-                    VALUES (@idRachunek_Operacja + 1, ISNULL(@dziennyNrOperacji, 0) + 1, @idRachunek, @idOperacja,
-                            'WYC', null,
-                            @idClient, null);
-                END
-            -- aktualizacja stanu konta
-            UPDATE Rachunek
-            SET StanKonta = StanKonta - @amount
-            WHERE IdRachunek = @idRachunek
-            IF (@isSecondAccountInOurDB = 1)
-                BEGIN
-                    UPDATE Rachunek
-                    SET StanKonta = StanKonta + @amount
-                    WHERE IdRachunek =
-                          (SELECT IdRachunek FROM Rachunek WHERE NrRachunku = @toAccount)
-                END
-        END
+        IF (SELECT StanKonta FROM Rachunek WHERE NrRachunku = @fromAccount) < @amount
+            RAISERROR ('Brak środków',1,2)
+        ELSE
+            BEGIN
+                DECLARE
+                    @idRachunek int
+                SELECT @idRachunek = IdRachunek FROM Rachunek WHERE NrRachunku = @fromAccount;
+
+                -- czy drugi rachunek również w naszym banku
+                DECLARE
+                    @isSecondAccountInOurDB          bit,
+                    @isOtherAccountBelongToOneClient bit,
+                    @idOperacja                      int,
+                    @idRachunek_Operacja             int,
+                    @dziennyNrOperacji               int
+                SELECT @isSecondAccountInOurDB = COUNT(*) FROM Rachunek WHERE NrRachunku = @fromAccount
+                SELECT @isOtherAccountBelongToOneClient = COUNT(*) - 1
+                FROM Klient_Rachunek
+                         JOIN Rachunek ON Klient_Rachunek.IdRachunek = Rachunek.IdRachunek
+                WHERE IdKlient = @idClient
+                  AND (NrRachunku = @fromAccount OR NrRachunku = @toAccount)
+                -- operacja
+                SELECT @idOperacja = MAX(IdOperacja) FROM Operacja
+                IF (@isSecondAccountInOurDB = 0)
+                    -- identyfikatorKonta dla rachunków zewnętrznych
+                    BEGIN
+                        DECLARE
+                            @idIdentyfikatorKonta int
+                        SELECT @idIdentyfikatorKonta = MAX(IdIdentyfikatorKonta) FROM IdentyfikatorKonta
+                        INSERT INTO IdentyfikatorKonta VALUES (@idIdentyfikatorKonta + 1, @toAccount, 'ING', null);
+                        INSERT INTO Operacja
+                        VALUES (@idOperacja + 1, @amount, 'comment', CONVERT(DATETIME, sysdatetime()),
+                                @idIdentyfikatorKonta);
+                    END
+                ELSE
+                    BEGIN
+                        INSERT INTO Operacja
+                        VALUES (@idOperacja + 1, @amount, 'comment', CONVERT(DATETIME, sysdatetime()), null);
+                    END
+                -- rachunek_operacja
+                SELECT @idRachunek_Operacja = MAX(IdRachunek_Operacja) FROM Rachunek_Operacja
+                SELECT @dziennyNrOperacji = MAX(DziennyNrOperacji) -- założenie zerowania rekordów dziennyNrOperacji o północy
+                FROM Rachunek_Operacja
+                         JOIN Operacja ON Rachunek_Operacja.IdOperacja = Operacja.IdOperacja
+                WHERE IdRachunek = @fromAccount
+                IF (@isOtherAccountBelongToOneClient = 0)
+                    -- operacjaWychodzącaDane dla przelewów wychodzących
+                    BEGIN
+                        DECLARE
+                            @idOperacjaWychodzacaDane int
+                        SELECT @idOperacjaWychodzacaDane = MAX(IdOperacjaWychodzacaDane) FROM OperacjaWychodzacaDane
+                        INSERT INTO OperacjaWychodzacaDane
+                        VALUES (@idOperacjaWychodzacaDane + 1, CONVERT(DATETIME, sysdatetime()), null);
+                        INSERT INTO Rachunek_Operacja
+                        VALUES (@idRachunek_Operacja + 1, ISNULL(@dziennyNrOperacji, 0) + 1, @idRachunek, @idOperacja,
+                                'WYC', null, @idClient, @idOperacjaWychodzacaDane);
+                    END
+                ELSE
+                    -- dla przelewów między własnymi rachunkami
+                    BEGIN
+                        INSERT INTO Rachunek_Operacja
+                        VALUES (@idRachunek_Operacja + 1, ISNULL(@dziennyNrOperacji, 0) + 1, @idRachunek, @idOperacja,
+                                'PMR', null, @idClient, null);
+                    END
+                -- aktualizacja stanu konta
+                UPDATE Rachunek
+                SET StanKonta = StanKonta - @amount
+                WHERE IdRachunek = @idRachunek
+                IF (@isSecondAccountInOurDB = 1)
+                    BEGIN
+                        UPDATE Rachunek
+                        SET StanKonta = StanKonta + @amount
+                        WHERE IdRachunek =
+                              (SELECT IdRachunek FROM Rachunek WHERE NrRachunku = @toAccount)
+                    END
+            END
 END;
 GO
 
+-- brak uprawnień klienta do operacji na wybranym koncie
+EXEC transfer 2000, 1234567890123456, 1218851198152165, 10;
+-- brak środków
 EXEC transfer 2000, 1234567890123456, 1218851198152165, 1;
-EXEC transfer 500, 1218851198152165, 1234567890123456, 2;
-EXEC transfer 500, 1218851198152165, 0000000000000000, 2;
+-- przelew między rachunkami
+EXEC transfer 50, 1218851198152165, 1234567890123456, 1;
+-- przelew wychodzący w obrębie banku
+EXEC transfer 100, 1218851198152165, 9416549564654659, 2;
+-- przelew poza bank
+EXEC transfer 200, 1218851198152165, 0000000000000000, 2;
