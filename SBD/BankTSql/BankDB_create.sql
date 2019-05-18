@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2019-05-18 10:31:01.387
+-- Last modification date: 2019-05-18 11:04:35.482
 
 -- tables
 -- Table: Adres
@@ -28,7 +28,7 @@ CREATE TABLE Email (
     IdEmail int  NOT NULL,
     Adres varchar(50)  NOT NULL,
     CzyGlowny bit  NOT NULL,
-    Klient_IdKlient int  NOT NULL,
+    IdKlient int  NOT NULL,
     CONSTRAINT Email_pk PRIMARY KEY  (IdEmail)
 );
 
@@ -66,7 +66,7 @@ CREATE TABLE Karta (
     CzyPlatnosciZblizeniowe bit  NOT NULL,
     DataWaznosci date  NOT NULL,
     CzyDezaktywowana bit  NOT NULL,
-    KartaDictKey varchar(3)  NOT NULL,
+    KartaDictK varchar(3)  NOT NULL,
     IdKlient_Rachunek int  NOT NULL,
     CONSTRAINT Karta_pk PRIMARY KEY  (IdKarta)
 );
@@ -162,7 +162,7 @@ CREATE TABLE Operacja (
 CREATE TABLE OperacjaWychodzacaDane (
     IdOperacjaWychodzacaDane int  NOT NULL,
     CzasZlecenia datetime  NOT NULL,
-    PlatnoscDict_Key varchar(3)  NULL,
+    PlatnoscDictKey varchar(3)  NULL,
     CONSTRAINT OperacjaWychodzacaDane_pk PRIMARY KEY  (IdOperacjaWychodzacaDane)
 );
 
@@ -223,7 +223,7 @@ CREATE TABLE Telefon (
     IdTelefon int  NOT NULL,
     Numer varchar(20)  NOT NULL,
     CzyGlowny varchar(1)  NOT NULL,
-    Klient_IdKlient int  NOT NULL,
+    IdKlient int  NOT NULL,
     CONSTRAINT Telefon_pk PRIMARY KEY  (IdTelefon)
 );
 
@@ -243,7 +243,7 @@ ALTER TABLE BankDict ADD CONSTRAINT BankDict_Adres
 
 -- Reference: Email_Klient (table: Email)
 ALTER TABLE Email ADD CONSTRAINT Email_Klient
-    FOREIGN KEY (Klient_IdKlient)
+    FOREIGN KEY (IdKlient)
     REFERENCES Klient (IdKlient);
 
 -- Reference: IdentyfikatorKonta_Adres (table: IdentyfikatorKonta)
@@ -263,7 +263,7 @@ ALTER TABLE Identyfikator ADD CONSTRAINT Identyfikator_Dict
 
 -- Reference: Karta_KartaDict (table: Karta)
 ALTER TABLE Karta ADD CONSTRAINT Karta_KartaDict
-    FOREIGN KEY (KartaDictKey)
+    FOREIGN KEY (KartaDictK)
     REFERENCES KartaDict ("Key");
 
 -- Reference: Karta_Klient_Rachunek (table: Karta)
@@ -271,8 +271,8 @@ ALTER TABLE Karta ADD CONSTRAINT Karta_Klient_Rachunek
     FOREIGN KEY (IdKlient_Rachunek)
     REFERENCES Klient_Rachunek (IdKlient_Rachunek);
 
--- Reference: KategoriaDict (table: Rachunek_Operacja)
-ALTER TABLE Rachunek_Operacja ADD CONSTRAINT KategoriaDict
+-- Reference: KategoriaDict_Rachunek_Operacja (table: Rachunek_Operacja)
+ALTER TABLE Rachunek_Operacja ADD CONSTRAINT KategoriaDict_Rachunek_Operacja
     FOREIGN KEY (KategoriaDictKey)
     REFERENCES KategoriaDict ("Key");
 
@@ -331,8 +331,8 @@ ALTER TABLE Klient ADD CONSTRAINT Klient_Urzad_skarbowy
     FOREIGN KEY (IdUrzadSkarbowy)
     REFERENCES Urzad_skarbowy (IdUrzadSkarbowy);
 
--- Reference: OperacjaWychodzacaDane (table: Rachunek_Operacja)
-ALTER TABLE Rachunek_Operacja ADD CONSTRAINT OperacjaWychodzacaDane
+-- Reference: OperacjaWychodzacaDane_Rachunek_Operacja (table: Rachunek_Operacja)
+ALTER TABLE Rachunek_Operacja ADD CONSTRAINT OperacjaWychodzacaDane_Rachunek_Operacja
     FOREIGN KEY (IdOperacjaWychodzacaDane)
     REFERENCES OperacjaWychodzacaDane (IdOperacjaWychodzacaDane);
 
@@ -341,9 +341,9 @@ ALTER TABLE Operacja ADD CONSTRAINT Operacja_IdentyfikatorKonta
     FOREIGN KEY (IdIdentyfikatorKonta)
     REFERENCES IdentyfikatorKonta (IdIdentyfikatorKonta);
 
--- Reference: PlatnoscDict (table: OperacjaWychodzacaDane)
-ALTER TABLE OperacjaWychodzacaDane ADD CONSTRAINT PlatnoscDict
-    FOREIGN KEY (PlatnoscDict_Key)
+-- Reference: PlatnoscDict_OperacjaWychodzacaDane (table: OperacjaWychodzacaDane)
+ALTER TABLE OperacjaWychodzacaDane ADD CONSTRAINT PlatnoscDict_OperacjaWychodzacaDane
+    FOREIGN KEY (PlatnoscDictKey)
     REFERENCES PlatnoscDict ("Key");
 
 -- Reference: Rachunek_Operacja_Klient (table: Rachunek_Operacja)
@@ -366,14 +366,14 @@ ALTER TABLE Rachunek ADD CONSTRAINT Rachunek_RachunekDict
     FOREIGN KEY (RachunekDictKey)
     REFERENCES RachunekDict ("Key");
 
--- Reference: RodzajOperacjiDict (table: Rachunek_Operacja)
-ALTER TABLE Rachunek_Operacja ADD CONSTRAINT RodzajOperacjiDict
+-- Reference: RodzajOperacjiDict_Rachunek_Operacja (table: Rachunek_Operacja)
+ALTER TABLE Rachunek_Operacja ADD CONSTRAINT RodzajOperacjiDict_Rachunek_Operacja
     FOREIGN KEY (RodzajOperacjiDictKey)
     REFERENCES RodzajOperacjiDict ("Key");
 
 -- Reference: Telefon_Klient (table: Telefon)
 ALTER TABLE Telefon ADD CONSTRAINT Telefon_Klient
-    FOREIGN KEY (Klient_IdKlient)
+    FOREIGN KEY (IdKlient)
     REFERENCES Klient (IdKlient);
 
 -- Reference: Urzad_skarbowy_Adres (table: Urzad_skarbowy)

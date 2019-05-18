@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2019-05-18 10:31:01.387
+-- Last modification date: 2019-05-18 11:04:35.482
 
 -- foreign keys
 ALTER TABLE BankDict DROP CONSTRAINT BankDict_Adres;
@@ -16,7 +16,7 @@ ALTER TABLE Karta DROP CONSTRAINT Karta_KartaDict;
 
 ALTER TABLE Karta DROP CONSTRAINT Karta_Klient_Rachunek;
 
-ALTER TABLE Rachunek_Operacja DROP CONSTRAINT KategoriaDict;
+ALTER TABLE Rachunek_Operacja DROP CONSTRAINT KategoriaDict_Rachunek_Operacja;
 
 ALTER TABLE Klient DROP CONSTRAINT Klient_AdresKorespondencyjny;
 
@@ -40,11 +40,11 @@ ALTER TABLE Klient DROP CONSTRAINT Klient_StanCywilnyDict;
 
 ALTER TABLE Klient DROP CONSTRAINT Klient_Urzad_skarbowy;
 
-ALTER TABLE Rachunek_Operacja DROP CONSTRAINT OperacjaWychodzacaDane;
+ALTER TABLE Rachunek_Operacja DROP CONSTRAINT OperacjaWychodzacaDane_Rachunek_Operacja;
 
 ALTER TABLE Operacja DROP CONSTRAINT Operacja_IdentyfikatorKonta;
 
-ALTER TABLE OperacjaWychodzacaDane DROP CONSTRAINT PlatnoscDict;
+ALTER TABLE OperacjaWychodzacaDane DROP CONSTRAINT PlatnoscDict_OperacjaWychodzacaDane;
 
 ALTER TABLE Rachunek_Operacja DROP CONSTRAINT Rachunek_Operacja_Klient;
 
@@ -54,7 +54,7 @@ ALTER TABLE Rachunek_Operacja DROP CONSTRAINT Rachunek_Operacja_Rachunek;
 
 ALTER TABLE Rachunek DROP CONSTRAINT Rachunek_RachunekDict;
 
-ALTER TABLE Rachunek_Operacja DROP CONSTRAINT RodzajOperacjiDict;
+ALTER TABLE Rachunek_Operacja DROP CONSTRAINT RodzajOperacjiDict_Rachunek_Operacja;
 
 ALTER TABLE Telefon DROP CONSTRAINT Telefon_Klient;
 
