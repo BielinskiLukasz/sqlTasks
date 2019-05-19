@@ -106,6 +106,7 @@ BEGIN
     DEALLOCATE emails;
 END;
 
+-- TESTS
 -- zdublowany pesel
 INSERT INTO Klient
 VALUES (12, 'Łukasz', 'Paweł', 'Nowak', 92111907850, 'Tomasz', 'Ewa', 'Filipska', CONVERT(DATETIME, '1992-11-19'),
@@ -130,7 +131,24 @@ VALUES (15, 'koszary@com.pl', 0, 5);
 -- zarówno jednego rachunku (przelew do/z banku) jak i dwóch rachunków (przelew między rachunkami w danym banku).
 -- Zadaniem wyzwalacza jest aktualizacja stanu konta/kont dla dodawanych/aktualizowanych/usuwanych operacji.
 
-
+CREATE TRIGGER updateAccount
+    ON Operacja
+    FOR Insert, Update, Delete
+    AS
+BEGIN
+    DECLARE
+        @add FLOAT, @remove FLOAT, @NewIdAccount INT, @OldIdAccount INT
+    SELECT @add = Kwota FROM inserted
+    SELECT @remove = Kwota FROM deleted
+    SELECT @NewIdAccount = IdRachunek
+    FROM inserted
+             JOIN Rachunek_Operacja ON inserted.IdOperacja = Rachunek_Operacja.IdOperacja
+    SELECT @OldIdAccount = IdRachunek
+    FROM deleted
+             JOIN Rachunek_Operacja ON deleted.IdOperacja = Rachunek_Operacja.IdOperacja
+    UPDATE Rachunek SET StanKonta = StanKonta - ISNULL(@remove, 0) WHERE IdRachunek = @OldIdAccount
+    UPDATE Rachunek SET StanKonta = StanKonta + ISNULL(@add, 0) WHERE IdRachunek = @NewIdAccount
+END;
 
 
 -- Finanse banku
@@ -156,7 +174,7 @@ CREATE TRIGGER updateFinancesFromAccounts
     AS
 BEGIN
     DECLARE
-        @add INT, @remove INT
+        @add FLOAT, @remove FLOAT
     SELECT @add = SUM(StanKonta) FROM inserted
     SELECT @remove = SUM(StanKonta) FROM deleted
     UPDATE finances SET value = value - ISNULL(@remove, 0) + ISNULL(@add, 0)
@@ -168,13 +186,13 @@ CREATE TRIGGER updateFinancesFromInvestments
     AS
 BEGIN
     DECLARE
-        @add INT, @remove INT
+        @add FLOAT , @remove FLOAT
     SELECT @add = SUM(Kwota) FROM inserted
     SELECT @remove = SUM(Kwota) FROM deleted
     UPDATE finances SET value = value - ISNULL(@remove, 0) + ISNULL(@add, 0)
 END;
 
-
+-- TESTS
 SELECT value
 FROM finances;
 
