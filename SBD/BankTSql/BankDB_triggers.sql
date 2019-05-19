@@ -136,3 +136,65 @@ VALUES (15, 'koszary@com.pl', 0, 5);
 -- Finanse banku
 -- Tworzona jest tabela zawierająca informacje o funduszach zgromadzonych na rachunkach i lokatach. Do rachunków i lokat
 -- doczepiany jest wyzwalacz dbający o to, aby kwota była zawsze aktualna.
+
+CREATE TABLE finances
+(
+    value FLOAT NOT NULL
+)
+
+BEGIN
+    DECLARE
+        @sum FLOAT
+    SELECT @sum = SUM(StanKonta) FROM Rachunek
+    SELECT @sum = @sum + SUM(Kwota) FROM Klient_Lokata
+    INSERT INTO finances VALUES (@sum)
+END
+
+CREATE TRIGGER updateFinancesFromAccounts
+    ON Rachunek
+    FOR Insert, Update, Delete
+    AS
+BEGIN
+    DECLARE
+        @add INT, @remove INT
+    SELECT @add = SUM(StanKonta) FROM inserted
+    SELECT @remove = SUM(StanKonta) FROM deleted
+    UPDATE finances SET value = value - ISNULL(@remove, 0) + ISNULL(@add, 0)
+END;
+
+CREATE TRIGGER updateFinancesFromInvestments
+    ON Klient_Lokata
+    FOR Insert, Update, Delete
+    AS
+BEGIN
+    DECLARE
+        @add INT, @remove INT
+    SELECT @add = SUM(Kwota) FROM inserted
+    SELECT @remove = SUM(Kwota) FROM deleted
+    UPDATE finances SET value = value - ISNULL(@remove, 0) + ISNULL(@add, 0)
+END;
+
+
+SELECT value
+FROM finances;
+
+INSERT INTO Klient_Lokata
+VALUES (9, 1000000.00, 25, CONVERT(DATETIME, '2017-12-30'), 2, 4);
+
+SELECT value
+FROM finances;
+
+
+UPDATE Rachunek
+SET StanKonta = 0
+WHERE IdRachunek = 3;
+
+SELECT value
+FROM finances;
+
+DELETE
+FROM Klient_Lokata
+WHERE IdKlient_Lokata = 9;
+
+SELECT value
+FROM finances;
