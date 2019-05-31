@@ -2,6 +2,13 @@
 -- (lub jakiejkolwiek innej). Wypisz uzyskany wynik używając instrukcji PRINT, w postaci napisu np. "W tabeli jest 10
 -- osób".
 
+DECLARE
+  howmany     INTEGER;
+BEGIN
+  SELECT COUNT(*) INTO howmany
+  FROM EMP
+  dbms_output.put_line (to_char(howmany));
+END;
 
 -- 2. Sprawdź w bloku PL/SQL liczbę pracowników z tabeli EMP. Jeśli liczba jest mniejsza niż 16, wstaw pracownika
 -- Kowalskiego i wypisz komunikat. W przeciwnym przypadku wypisz komunikat informujący o tym, że nie wstawiono danych.
