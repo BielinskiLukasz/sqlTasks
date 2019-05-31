@@ -35,7 +35,6 @@ END;
 CREATE OR REPLACE PROCEDURE CREATE_DEPT(new_deptno IN NUMBER, new_dname IN VARCHAR2, new_loc IN VARCHAR2)
     IS
     howmany INTEGER;
-
 BEGIN
     SELECT COUNT(*) INTO howmany
     FROM DEPT
@@ -47,7 +46,6 @@ BEGIN
         INSERT INTO DEPT VALUES (new_deptno, new_dname, new_loc);
         DBMS_OUTPUT.PUT_LINE('dept ' || new_deptno || ' inserted');
     END IF;
-
 END CREATE_DEPT;
 
 BEGIN
@@ -62,6 +60,41 @@ END;
 -- niż 1000 miały zwiększone wynagrodzenie o 10%, natomiast osoby zarabiające powyżej 1500 miały zmniejszone
 -- wynagrodzenie o 10%. Wypisz na ekran każdą wprowadzoną zmianę.
 
+DECLARE
+    empno_data    NUMBER(4);
+    actual_salary NUMBER(7, 2);
+    CURSOR c1 IS
+        SELECT EMPNO, SAL
+        FROM EMP;
+
+BEGIN
+    OPEN c1;
+
+    FETCH c1 INTO empno_data, actual_salary;
+
+    WHILE c1%FOUND
+        LOOP
+            IF actual_salary < 1000 THEN
+                UPDATE EMP
+                SET SAL = actual_salary * 1.1
+                WHERE EMPNO = empno_data;
+                DBMS_OUTPUT.PUT_LINE('increase salary for ' || empno_data);
+                COMMIT;
+            ELSE
+                IF actual_salary > 1500 THEN
+                    UPDATE EMP
+                    SET SAL = actual_salary * 0.9
+                    WHERE EMPNO = empno_data;
+                    DBMS_OUTPUT.PUT_LINE('decrease salary for ' || empno_data);
+                    COMMIT;
+                END IF;
+            END IF;
+
+            FETCH c1 INTO empno_data, actual_salary;
+        END LOOP;
+
+    CLOSE c1;
+END;
 
 -- 5. Przerób kod z zadania 1 na procedurę tak, aby wartości zarobków (1000 i 1500) nie były stałe, tylko były
 -- parametrami procedury.
