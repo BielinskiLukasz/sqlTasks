@@ -3,36 +3,60 @@
 -- osób".
 
 DECLARE
-  howmany     INTEGER;
+    howmany INTEGER;
 BEGIN
-  SELECT COUNT(*) INTO howmany
-  FROM EMP
-  dbms_output.put_line (to_char(howmany));
+    SELECT COUNT(*) INTO howmany
+    FROM EMP;
+    DBMS_OUTPUT.PUT_LINE('W tabeli jest ' || to_char(howmany) || ' osób');
 END;
 
 -- 2. Sprawdź w bloku PL/SQL liczbę pracowników z tabeli EMP. Jeśli liczba jest mniejsza niż 16, wstaw pracownika
 -- Kowalskiego i wypisz komunikat. W przeciwnym przypadku wypisz komunikat informujący o tym, że nie wstawiono danych.
 
 DECLARE
-  howmany     INTEGER;
+    howmany INTEGER;
 BEGIN
-  SELECT COUNT(*) INTO howmany
-  FROM EMP;
+    SELECT COUNT(*) INTO howmany
+    FROM EMP;
 
-  IF (howmany < 16) THEN
-    INSERT INTO EMP VALUES
-        (9997,'MILLER','CLERK',7782,'82/01/23',1300,NULL,10);
-    dbms_output.put_line ('added');
-  ELSE
-    dbms_output.put_line (to_char(howmany)||' is too much');
-  END IF;
+    IF (howmany < 16) THEN
+        INSERT INTO EMP
+        VALUES (9997, 'MILLER', 'CLERK', 7782, '82/01/23', 1300, NULL, 10);
+        DBMS_OUTPUT.PUT_LINE('added');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE(to_char(howmany) || ' is too much');
+    END IF;
 END;
 
 -- 3. Napisz procedurę służącą do wstawiania działów do tabeli DEPT. Procedura na pobierać jako parametry: nr_działu,
 -- nazwę i lokalizację. Należy sprawdzić, czy dział o takiej nazwie lub lokalizacji już istnieje. Jeżeli istnieje, to
 -- nie wstawiamy nowego rekordu.
 
+CREATE OR REPLACE PROCEDURE CREATE_DEPT(new_deptno IN NUMBER, new_dname IN VARCHAR2, new_loc IN VARCHAR2)
+    IS
+    howmany INTEGER;
 
+BEGIN
+    SELECT COUNT(*) INTO howmany
+    FROM DEPT
+    WHERE DEPTNO = new_deptno;
+
+    IF (howmany > 0) THEN
+        DBMS_OUTPUT.PUT_LINE('dept ' || new_deptno || ' already exist');
+    ELSE
+        INSERT INTO DEPT VALUES (new_deptno, new_dname, new_loc);
+        DBMS_OUTPUT.PUT_LINE('dept ' || new_deptno || ' inserted');
+    END IF;
+
+END CREATE_DEPT;
+
+BEGIN
+    CREATE_DEPT(10, '', '');
+END;
+
+BEGIN
+    CREATE_DEPT(50, 'a', 'b');
+END;
 
 -- 4. Przy pomocy kursora przejrzyj wszystkich pracowników i zmodyfikuj wynagrodzenia tak, aby osoby zarabiające mniej
 -- niż 1000 miały zwiększone wynagrodzenie o 10%, natomiast osoby zarabiające powyżej 1500 miały zmniejszone
