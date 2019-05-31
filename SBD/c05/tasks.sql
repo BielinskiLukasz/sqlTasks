@@ -99,6 +99,50 @@ END;
 -- 5. Przerób kod z zadania 1 na procedurę tak, aby wartości zarobków (1000 i 1500) nie były stałe, tylko były
 -- parametrami procedury.
 
+CREATE OR REPLACE PROCEDURE CHANGE_SALARY(increase_below IN NUMBER, decrease_over IN NUMBER)
+    IS
+    empno_data    NUMBER(4);
+    actual_salary NUMBER(7, 2);
+    CURSOR c1 IS
+        SELECT EMPNO, SAL
+        FROM EMP;
+
+BEGIN
+    OPEN c1;
+
+    FETCH c1 INTO empno_data, actual_salary;
+
+    WHILE c1%FOUND
+        LOOP
+            IF actual_salary < increase_below THEN
+                UPDATE EMP
+                SET SAL = actual_salary * 1.1
+                WHERE EMPNO = empno_data;
+                DBMS_OUTPUT.PUT_LINE('increase salary for ' || empno_data);
+                COMMIT;
+            ELSE
+                IF actual_salary > decrease_over THEN
+                    UPDATE EMP
+                    SET SAL = actual_salary * 0.9
+                    WHERE EMPNO = empno_data;
+                    DBMS_OUTPUT.PUT_LINE('decrease salary for ' || empno_data);
+                    COMMIT;
+                END IF;
+            END IF;
+
+            FETCH c1 INTO empno_data, actual_salary;
+        END LOOP;
+
+    CLOSE c1;
+END CHANGE_SALARY;
+
+BEGIN
+    CHANGE_SALARY(1000, 1500);
+END;
+
+BEGIN
+    CHANGE_SALARY(1200, 1200);
+END;
 
 -- 6. W procedurze sprawdź średnią wartość zarobków z tabeli EMP z działu określonego parametrem procedury. Następnie
 -- należy dać prowizję (comm) tym pracownikom tego działu, którzy zarabiają poniżej średniej. Prowizja powinna wynosić
