@@ -110,6 +110,7 @@ EXEC give_common 10;
 -- (bez kursora) Utwórz tabelę Magazyn (IdPozycji, Nazwa, Ilosc) zawierającą ilości poszczególnych towarów w magazynie 
 -- i wstaw do niej kilka przykładowych rekordów. W bloku Transact-SQL sprawdź, którego artykułu jest najwięcej w 
 -- magazynie i zmniejsz ilość tego artykułu o 5 (jeśli stan jest większy lub równy 5, w przeciwnym wypadku zgłoś błąd).
+
 CREATE TABLE Magazyn
 (
     IdPozycji integer     NOT NULL,
@@ -164,6 +165,7 @@ END;
 -- Zad5
 -- Przerób kod z zadania 4 na procedurę, której będziemy mogli podać wartość, o którą zmniejszamy stan
 -- (zamiast wpisanego „na sztywno” 5).
+
 CREATE PROCEDURE stash_max_prod @how_many int
 AS
 BEGIN
