@@ -57,6 +57,29 @@ COMMIT;
 -- 2. Przerób kod z zadania 1 na procedurę, której będziemy mogli podać wartość, o którą zmniejszamy stan (zamiast
 -- wpisanego „na sztywno” 5).
 
+CREATE OR REPLACE PROCEDURE SELL_MAX_PROD(how_to_sell IN NUMBER)
+    IS
+    maxIlosc INTEGER;
+BEGIN
+    SELECT MAX(Ilosc) INTO maxIlosc
+    FROM Magazyn;
+    IF maxIlosc < how_to_sell THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Za mało produktów w magazynie');
+    ELSE
+        UPDATE Magazyn
+        SET Ilosc = maxIlosc - how_to_sell
+        WHERE IdPozycji = (
+            SELECT MIN(IdPozycji)
+            FROM Magazyn
+            WHERE Ilosc = maxIlosc
+        );
+        COMMIT;
+    END IF;
+END SELL_MAX_PROD;
+
+BEGIN
+    SELL_MAX_PROD(5);
+END;
 
 -- 3. Utwórz wyzwalacz, który nie pozwoli usunąć rekordu z tabeli EMP.
 
