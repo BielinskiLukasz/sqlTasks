@@ -172,9 +172,16 @@ CREATE OR REPLACE TRIGGER cannotSomeActions
     BEFORE INSERT OR DELETE OR UPDATE OF ENAME
     ON EMP
     FOR EACH ROW
+DECLARE
+    howmany INTEGER;
 BEGIN
     IF INSERTING THEN
-        DBMS_OUTPUT.PUT_LINE('implement inserting');
+        SELECT COUNT(*) INTO howmany
+        FROM EMP
+        WHERE ENAME = :NEW.ENAME;
+        IF howmany > 0 THEN
+            RAISE_APPLICATION_ERROR(-20001, 'Istnieje już pracownik o takim nazwisku');
+        END IF;
     ELSE
         IF UPDATING THEN
             RAISE_APPLICATION_ERROR(-20001, 'Nie można zmieniać nazwiska pracownika');
