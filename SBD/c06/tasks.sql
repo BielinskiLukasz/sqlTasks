@@ -102,6 +102,23 @@ COMMIT;
 -- Uwaga: Ten sam efekt można uzyskać łatwiej przy pomocy więzów spójności typu CHECK. Użyjmy wyzwalacza w celach
 -- treningowych.
 
+CREATE OR REPLACE TRIGGER payTooLow
+    BEFORE INSERT OR UPDATE OF SAL
+    ON EMP
+    FOR EACH ROW
+    WHEN (NEW.SAL <= 1000)
+BEGIN
+    RAISE_APPLICATION_ERROR(-20001, 'Trzeba płacić pracownikowi więcej niż 1000');
+END payTooLow;
+
+INSERT INTO emp
+VALUES (9997, 'SMITH', 'CLERK', 7902, '80/12/17', 1000, NULL, 20);
+
+UPDATE emp
+SET sal = 500
+WHERE job = 'SALESMAN';
+
+COMMIT;
 
 -- 5. Utwórz tabelę budzet:
 -- CREATE TABLE budzet (wartosc INT NOT NULL)
