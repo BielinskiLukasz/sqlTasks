@@ -123,15 +123,45 @@ COMMIT;
 -- 5. Utwórz tabelę budzet:
 -- CREATE TABLE budzet (wartosc INT NOT NULL)
 
+CREATE TABLE budzet
+(
+    wartosc INT NOT NULL
+);
 
 -- 6. W tabeli tej będzie przechowywana łączna wartość wynagrodzenia wszystkich pracowników. Tabela będzie zawsze
 -- zawierała jeden wiersz. Należy najpierw obliczyć początkową wartość zarobków:
 -- INSERT INTO budzet (wartosc)
 -- SELECT SUM(sal) FROM emp
 
+INSERT INTO BUDZET (WARTOSC)
+SELECT SUM(SAL)
+FROM EMP;
+COMMIT;
 
 -- 7. Utwórz wyzwalacz, który będzie pilnował, aby wartość w tabeli budzet była zawsze aktualna, a więc przy wszystkich
 -- operacjach aktualizujących tabelę EMP (INSERT, UPDATE, DELETE), wyzwalacz będzie aktualizował wpis w tabeli budżet.
+
+CREATE OR REPLACE TRIGGER updateBudget
+    AFTER INSERT OR DELETE OR UPDATE OF SAL
+    ON EMP
+    FOR EACH ROW
+BEGIN
+    UPDATE BUDZET SET WARTOSC = WARTOSC + NVL(:NEW.SAL, 0) - NVL(:OLD.SAL, 0);
+END updateBudget;
+
+INSERT INTO emp
+VALUES (9996, 'SMITH', 'CLERK', 7902, '17/12/06', 8000, NULL, 20);
+COMMIT;
+
+UPDATE emp
+SET sal = 6000
+WHERE job = 'SALESMAN';
+COMMIT;
+
+DELETE
+FROM emp
+WHERE empno = 9996;
+COMMIT;
 
 
 -- 8. Napisz jeden wyzwalacz, który:
