@@ -163,12 +163,39 @@ FROM emp
 WHERE empno = 9996;
 COMMIT;
 
-
 -- 8. Napisz jeden wyzwalacz, który:
 -- ➢ Nie pozwoli usunąć pracownika, którego pensja jest większa od 0.
 -- ➢ Nie pozwoli zmienić nazwiska pracownika.
 -- ➢ Nie pozwoli wstawić pracownika, który już istnieje (sprawdzając po nazwisku).
 
+CREATE OR REPLACE TRIGGER cannotSomeActions
+    BEFORE INSERT OR DELETE OR UPDATE OF ENAME
+    ON EMP
+    FOR EACH ROW
+BEGIN
+    IF INSERTING THEN
+        DBMS_OUTPUT.PUT_LINE('implement inserting');
+    ELSE
+        IF UPDATING THEN
+            RAISE_APPLICATION_ERROR(-20001, 'Nie można zmieniać nazwiska pracownika');
+        ELSE
+            IF (:OLD.SAL > 0) THEN
+                RAISE_APPLICATION_ERROR(-20001, 'Nie można usunąć pracownika, którego pensja jest większa od 0');
+            END IF;
+        END IF;
+    END IF;
+END cannotSomeActions;
+
+INSERT INTO emp
+VALUES (9995, 'SMITH', 'CLERK', 7902, '17/12/11', 8000, NULL, 20);
+
+UPDATE emp
+SET ename = 'SMITH2'
+WHERE job = 'CLERK';
+
+DELETE
+FROM emp
+WHERE empno = 9995;
 
 -- 9. Napisz wyzwalacz, który:
 -- ➢ Nie pozwoli zmniejszać pensji.
