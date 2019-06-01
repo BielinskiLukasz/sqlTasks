@@ -212,8 +212,6 @@ CREATE OR REPLACE TRIGGER cannotSomeOtherActions
     BEFORE DELETE OR UPDATE OF SAL
     ON EMP
     FOR EACH ROW
-DECLARE
-    howmany INTEGER;
 BEGIN
     IF DELETING THEN
         RAISE_APPLICATION_ERROR(-20001, 'Nie można usuwać pracowników');
