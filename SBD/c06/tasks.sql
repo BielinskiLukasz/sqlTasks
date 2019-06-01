@@ -208,3 +208,26 @@ WHERE empno = 9995;
 -- ➢ Nie pozwoli zmniejszać pensji.
 -- ➢ Nie pozwoli usuwać pracowników.
 
+CREATE OR REPLACE TRIGGER cannotSomeOtherActions
+    BEFORE DELETE OR UPDATE OF SAL
+    ON EMP
+    FOR EACH ROW
+DECLARE
+    howmany INTEGER;
+BEGIN
+    IF DELETING THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Nie można usuwać pracowników');
+    ELSE
+        IF :NEW.SAL < :OLD.SAL THEN
+            RAISE_APPLICATION_ERROR(-20001, 'Nie można zmniejszać pensji');
+        END IF;
+    END IF;
+END cannotSomeOtherActions;
+
+UPDATE emp
+SET sal = 799
+WHERE ename = 'SMITH';
+
+DELETE
+FROM emp
+WHERE empno = 9995;
