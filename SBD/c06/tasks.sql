@@ -83,6 +83,18 @@ END;
 
 -- 3. Utwórz wyzwalacz, który nie pozwoli usunąć rekordu z tabeli EMP.
 
+CREATE OR REPLACE TRIGGER cannotDelete
+    BEFORE DELETE
+    ON EMP
+    FOR EACH ROW
+BEGIN
+    RAISE_APPLICATION_ERROR(-20001, 'Nie można usunąć wiersza');
+END cannotDelete;
+
+DELETE
+FROM emp
+WHERE EMPNO = 9997;
+COMMIT;
 
 -- 4. Utwórz wyzwalacz, który przy wstawianiu lub modyfikowaniu danych w tabeli EMP sprawdzi czy nowe zarobki
 -- (wstawiane lub modyfikowane) są większe niż 1000. W przeciwnym przypadku wyzwalacz powinien zgłosić błąd i nie
