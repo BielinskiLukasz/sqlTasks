@@ -133,23 +133,43 @@ VALUES (15, 'koszary@com.pl', 0, 5);
 
 CREATE TRIGGER updateAccount
     ON Operacja
+    FOR Update
+    AS
+BEGIN
+    DECLARE
+        @add FLOAT, @remove FLOAT, @newIdAccount INT, @oldIdAccount INT
+    SELECT @add = Kwota FROM inserted
+    SELECT @remove = Kwota FROM deleted
+    SELECT @newIdAccount = IdRachunek
+    FROM inserted
+             JOIN Rachunek_Operacja ON inserted.IdOperacja = Rachunek_Operacja.IdOperacja
+    SELECT @oldIdAccount = IdRachunek
+    FROM deleted
+             JOIN Rachunek_Operacja ON deleted.IdOperacja = Rachunek_Operacja.IdOperacja
+    UPDATE Rachunek SET StanKonta = StanKonta - ISNULL(@remove, 0) WHERE IdRachunek = @oldIdAccount
+    UPDATE Rachunek SET StanKonta = StanKonta + ISNULL(@add, 0) WHERE IdRachunek = @newIdAccount
+END;
+
+CREATE TRIGGER updateAccount2
+    ON Rachunek_Operacja
     FOR Insert, Update, Delete
     AS
 BEGIN
     DECLARE
-        @add FLOAT, @remove FLOAT, @NewIdAccount INT, @OldIdAccount INT
-    SELECT @add = Kwota FROM inserted
-    SELECT @remove = Kwota FROM deleted
-    SELECT @NewIdAccount = IdRachunek
+        @add FLOAT, @remove FLOAT, @newIdAccount INT, @oldIdAccount INT
+    SELECT @add = Kwota
     FROM inserted
-             JOIN Rachunek_Operacja ON inserted.IdOperacja = Rachunek_Operacja.IdOperacja
-    SELECT @OldIdAccount = IdRachunek
+            JOIN Rachunek_Operacja ON inserted.IdOperacja = Rachunek_Operacja.IdOperacja
+    SELECT @remove = Kwota
     FROM deleted
-             JOIN Rachunek_Operacja ON deleted.IdOperacja = Rachunek_Operacja.IdOperacja
-    UPDATE Rachunek SET StanKonta = StanKonta - ISNULL(@remove, 0) WHERE IdRachunek = @OldIdAccount
-    UPDATE Rachunek SET StanKonta = StanKonta + ISNULL(@add, 0) WHERE IdRachunek = @NewIdAccount
+            JOIN Rachunek_Operacja ON deleted.IdOperacja = Rachunek_Operacja.IdOperacja
+    SELECT @newIdAccount = IdRachunek
+    FROM inserted
+    SELECT @oldIdAccount = IdRachunek
+    FROM deleted
+    UPDATE Rachunek SET StanKonta = StanKonta - ISNULL(@remove, 0) WHERE IdRachunek = @oldIdAccount
+    UPDATE Rachunek SET StanKonta = StanKonta + ISNULL(@add, 0) WHERE IdRachunek = @newIdAccount
 END;
-
 
 -- Finanse banku
 -- Tworzona jest tabela zawierająca informacje o funduszach zgromadzonych na rachunkach i lokatach. Do rachunków i lokat
