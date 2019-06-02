@@ -79,3 +79,112 @@ END;
 GO
 
 EXEC check_accounts 100;
+
+
+-- UNUSED BELOW
+
+-- Procedura przelewu
+-- Dla przelewu danej kwoty z wybranego rachunku na inny należy:
+-- -> sprawdzić, czy na wybranym rachunku znajdują się wymagane środki (WYJĄTEK JEŻELI NIE)
+-- -> stworzyć powiązanie rachunek_operacja
+-- -> zdefiniować rodzaj operacji (czy przelew między własnymi rachunkami?)
+-- -> wprowadzić wszelkie dane związane z operacją
+-- -> dla adresu, kategorii i płatności wprowadzono aktualnie null (niezaimplementowane)
+-- -> przyjęto rachunki zewnętrzne jako ING, a dany bank jako PKO
+-- -> zmniejszyć ilość środków na pierwszym koncie
+-- -> jeżeli drugie konto również w banku to zwiększyć ilość środków na drugim koncie
+-- TODO konieczne wstawianie relacji rachunek_operacja dla przelewów w przypadku, gdy drugi rachunek jest również w
+--  bazie banku (przelew przychodzący) <-- baza danych powinna być przebudowana pod ten przypadek...
+
+CREATE PROCEDURE transfer @amount float, @fromAccount bigint, @toAccount bigint, @idClient int
+AS
+BEGIN
+    IF @idClient NOT IN (SELECT IdKlient
+                         FROM Klient_Rachunek
+                                  JOIN Rachunek ON Klient_Rachunek.IdRachunek = Rachunek.IdRachunek
+                         WHERE NrRachunku = @fromAccount)
+        RAISERROR ('Brak uprawnień',1,2)
+    ELSE
+        IF (SELECT StanKonta FROM Rachunek WHERE NrRachunku = @fromAccount) < @amount
+            RAISERROR ('Brak środków',1,2)
+        ELSE
+            BEGIN
+                DECLARE
+                    @idRachunek int
+                SELECT @idRachunek = IdRachunek FROM Rachunek WHERE NrRachunku = @fromAccount;
+                -- czy drugi rachunek również w naszym banku
+                DECLARE
+                    @isSecondAccountInOurDB          bit,
+                    @isOtherAccountBelongToOneClient bit,
+                    @idOperacja                      int,
+                    @idRachunek_Operacja             int,
+                    @dziennyNrOperacji               int,
+                    @idIdentyfikatorKonta            int
+                SELECT @isSecondAccountInOurDB = COUNT(*) FROM Rachunek WHERE NrRachunku = @fromAccount
+                SELECT @isOtherAccountBelongToOneClient = COUNT(*) - 1
+                FROM Klient_Rachunek
+                         JOIN Rachunek ON Klient_Rachunek.IdRachunek = Rachunek.IdRachunek
+                WHERE IdKlient = @idClient
+                  AND (NrRachunku = @fromAccount OR NrRachunku = @toAccount)
+                -- operacja
+                SELECT @idOperacja = 1 + MAX(IdOperacja) FROM Operacja
+                SELECT @idIdentyfikatorKonta = 1 + MAX(IdIdentyfikatorKonta) FROM IdentyfikatorKonta
+                IF (@isSecondAccountInOurDB = 0)
+                    -- identyfikatorKonta dla rachunków zewnętrznych
+                    INSERT INTO IdentyfikatorKonta VALUES (@idIdentyfikatorKonta, @toAccount, 'ING', null);
+                ELSE
+                    INSERT INTO IdentyfikatorKonta VALUES (@idIdentyfikatorKonta, @toAccount, 'PKO', null);
+                INSERT INTO Operacja
+                VALUES (@idOperacja, @amount, 'comment', CONVERT(DATETIME, sysdatetime()),
+                        @idIdentyfikatorKonta);
+                -- rachunek_operacja
+                SELECT @idRachunek_Operacja = 1 + MAX(IdRachunek_Operacja) FROM Rachunek_Operacja
+                SELECT @dziennyNrOperacji =
+                       1 + ISNULL(MAX(DziennyNrOperacji) -- założenie zerowania rekordów dziennyNrOperacji o północy
+                                  FROM Rachunek_Operacja
+                                  JOIN Operacja ON Rachunek_Operacja.IdOperacja = Operacja.IdOperacja
+                                  WHERE IdRachunek = @fromAccount, 0)
+                IF (@isOtherAccountBelongToOneClient = 0)
+                    -- operacjaWychodzącaDane dla przelewów wychodzących
+                    BEGIN
+                        DECLARE
+                            @idOperacjaWychodzacaDane int
+                        SELECT @idOperacjaWychodzacaDane = 1 + MAX(IdOperacjaWychodzacaDane) FROM OperacjaWychodzacaDane
+                        INSERT INTO OperacjaWychodzacaDane
+                        VALUES (@idOperacjaWychodzacaDane, CONVERT(DATETIME, sysdatetime()), null);
+                        INSERT INTO Rachunek_Operacja
+                        VALUES (@idRachunek_Operacja, @dziennyNrOperacji, @idRachunek, @idOperacja, 'WYC', null,
+                                @idClient, @idOperacjaWychodzacaDane);
+                    END
+                ELSE
+                    -- dla przelewów między własnymi rachunkami
+                    BEGIN
+                        INSERT INTO Rachunek_Operacja
+                        VALUES (@idRachunek_Operacja, @dziennyNrOperacji, @idRachunek, @idOperacja, 'PMR', null,
+                                @idClient, null);
+                    END
+                -- aktualizacja stanu konta
+                UPDATE Rachunek
+                SET StanKonta = StanKonta - @amount
+                WHERE IdRachunek = @idRachunek
+                IF (@isSecondAccountInOurDB = 1)
+                    BEGIN
+                        UPDATE Rachunek
+                        SET StanKonta = StanKonta + @amount
+                        WHERE IdRachunek =
+                              (SELECT IdRachunek FROM Rachunek WHERE NrRachunku = @toAccount)
+                    END
+            END
+END;
+GO
+
+-- brak uprawnień klienta do operacji na wybranym koncie
+EXEC transfer 2000, 1234567890123456, 1218851198152165, 10;
+-- brak środków
+EXEC transfer 2000, 1234567890123456, 1218851198152165, 1;
+-- przelew między rachunkami
+EXEC transfer 50, 1218851198152165, 1234567890123456, 1;
+-- przelew wychodzący w obrębie banku
+EXEC transfer 100, 1218851198152165, 9416549564654659, 2;
+-- przelew poza bank
+EXEC transfer 200, 1218851198152165, 0000000000000000, 2;
